@@ -1,0 +1,44 @@
+$recourcePath: "/src/assets";
+
+$color1: #f7f8fa;
+$color2: #24303b;
+$color3: #a3a8ad;
+$color4: #0b61bd;
+$color5: #ffffff;
+$color6: #757c84;
+
+// borders:
+$borderRadius: 0.3rem;
+
+// fonts-sizes:
+$fontXS: 1rem;
+$fontSmall: 1.2rem;
+$fontMedium: 1.4rem;
+$fontLarge: 1.6rem;
+$fontXL: 1.8rem;
+$fontXXL: 2rem;
+$fontXXXL: 3rem;
+
+// offsets:
+$offsetMin: 0.1rem;
+$offsetTiny: 0.5rem;
+$offsetSmall: 1rem;
+$offsetMedium: 2rem;
+$offsetLarge: 3rem;
+$offsetXL: 4rem;
+$offsetXXL: 5rem;
+
+// transitions:
+$transitionFast: 200ms;
+$transitionNormal: 300ms;
+$transitionSlow: 500ms;
+
+:export {
+  color1: $color1;
+  color2: $color2;
+  color3: $color3;
+  color4: $color4;
+  color5: $color5;
+  color6: $color6;
+  recourcePath: $recourcePath;
+}
