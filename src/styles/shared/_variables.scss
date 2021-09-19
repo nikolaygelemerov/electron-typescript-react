@@ -1,11 +1,26 @@
 $recourcePath: "/src/assets";
 
-$color1: #f7f8fa;
-$color2: #24303b;
-$color3: #a3a8ad;
-$color4: #0b61bd;
-$color5: #ffffff;
-$color6: #757c84;
+$colorBkg: #484848;
+$colorNav: #646c6f;
+
+$colorTxt: whitesmoke;
+$colorTxtActive: #b7c6ba;
+//  colors:
+$color1: #0d1b1f;
+$color2: #4db8d6;
+$color3: #de5555;
+$color4: #54b4ec;
+$color5: #f5f5f5;
+$color6: #085f53;
+$color7: #713559;
+$color8: #685e57; // #634f3a;
+$color9: #3b6290;
+$color10: #757575;
+$color11: #b6bbbd;
+$color12: #b1461d;
+$color14: #d89b13;
+$color15: #1d3d77;
+$color16: #04881c;
 
 // borders:
 $borderRadius: 0.3rem;
@@ -40,5 +55,14 @@ $transitionSlow: 500ms;
   color4: $color4;
   color5: $color5;
   color6: $color6;
+  color7: $color7;
+  color8: $color8;
+  color9: $color9;
+  color10: $color10;
+  color11: $color11;
+  color12: $color12;
+  color14: $color14;
+  color15: $color15;
+  color16: $color16;
   recourcePath: $recourcePath;
 }

@@ -59,6 +59,8 @@
       "@managers/*": ["./managers/*"],
       "@pages": ["./pages"],
       "@pages/*": ["./pages/*"],
+      "@providers": ["./providers"],
+      "@providers/*": ["./providers/*"],
       "@services": ["./services"],
       "@services/*": ["./services/*"],
       "@styles/*": ["./styles/*"]

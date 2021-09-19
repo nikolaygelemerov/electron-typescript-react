@@ -1,5 +1,7 @@
 import { FC, memo, useEffect } from 'react';
 
+import { Main } from '@pages';
+
 import styles from './App.scss';
 
 const App: FC = () => {
@@ -9,7 +11,7 @@ const App: FC = () => {
 
   return (
     <main className={styles.App}>
-      <h1>App</h1>
+      <Main />
     </main>
   );
 };

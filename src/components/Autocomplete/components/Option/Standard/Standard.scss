@@ -1,0 +1,21 @@
+.Standard {
+  width: 100%;
+  height: 5rem;
+  color: $color1;
+  font-size: $fontXL;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  background-color: $color2;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    color: $color15;
+    background-color: $color11;
+  }
+
+  &.Selected {
+    color: $color5;
+    background-color: $color15;
+  }
+}

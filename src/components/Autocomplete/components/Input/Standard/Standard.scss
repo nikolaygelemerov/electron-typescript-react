@@ -1,0 +1,26 @@
+.Standard {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 5rem;
+  padding: 0 $offsetLarge 0 $offsetLarge;
+  font-size: $fontXL;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  background-color: $color4;
+  border-radius: $borderRadius;
+  transition: all $transitionNormal ease-in-out;
+
+  &::selection {
+    background: $color9;
+  }
+
+  &.Active {
+    color: $color4;
+    background-color: transparent;
+  }
+
+  &.Empty {
+    background-color: $color3;
+  }
+}

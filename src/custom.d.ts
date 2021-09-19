@@ -3,34 +3,24 @@ declare module '*.scss' {
   export default classes;
 }
 
-declare module 'home/HomeApp' {
-  import { mount } from 'home/HomeApp';
-
-  export { mount };
-}
-
-declare module 'employees/EmployeesApp' {
-  import { mount } from 'employees/EmployeesApp';
-
-  export { mount };
-}
-
-declare module 'payroll/PayrollApp' {
-  import { mount } from 'payroll/PayrollApp';
-
-  export { mount };
-}
-
-declare module 'pensions/PensionsApp' {
-  import { mount } from 'pensions/PensionsApp';
-
-  export { mount };
-}
-
-declare module 'about/AboutApp' {
-  import { mount } from 'about/AboutApp';
-
-  export { mount };
+declare module 'react-scroll-component' {
+  // eslint-disable-next-line no-undef
+  export default Scroll;
 }
 
 type TChildren = (() => JSX.Element | JSX.Element[]) | JSX.Element | JSX.Element[];
+
+interface IPerformanceMetric {
+  label: string;
+  shortLabel: string;
+  group: string;
+  type: string;
+  fields: string[];
+}
+
+interface IPerformanceCategory {
+  name: string;
+  label: string;
+  path: string;
+  metrics: IPerformanceMetric[];
+}

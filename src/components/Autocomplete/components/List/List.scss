@@ -1,0 +1,22 @@
+.List {
+  display: inline-block;
+  width: 100%;
+  overflow-y: hidden;
+  transition: height 400ms ease-out;
+  background-color: $color2;
+}
+
+.Scroller {
+  right: $offsetMin;
+  z-index: 1;
+  width: $offsetTiny;
+  opacity: 1;
+  background-color: rgba($colorNav, 0.5);
+  border-radius: $borderRadius;
+}
+
+.ScrollerContainer {
+  width: 100% !important;
+  border-bottom-left-radius: $borderRadius;
+  border-bottom-right-radius: $borderRadius;
+}
