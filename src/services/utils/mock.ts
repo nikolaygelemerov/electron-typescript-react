@@ -12,19 +12,13 @@ export const autocomplete = {
     { id: 'ferrari', value: 'ferrari', displayName: 'Ferrari' },
     { id: 'scoda', value: 'scoda', displayName: 'Scoda' }
   ],
-  defaultDisplayNameExtractor: (item: { displayName: string }): string => item.displayName,
-  defaultKeyExtractor: (item: { id: string }): string => item?.id,
-  defaultInputValueExtractor: (item: { value: any }): any => item?.value,
-  defaultValueExtractor: (item: {
-    id: string;
-    value: unknown;
-  }): { id: string; value: unknown } => ({
-    id: item?.id,
-    value: item?.value
+  defaultDisplayNameExtractor: (item: { label: string }): string => item.label,
+  defaultKeyExtractor: (item: { label: string }): string => item?.label,
+  defaultInputValueExtractor: (item: { label: any }): any => item?.label,
+  defaultValueExtractor: (item: { label: string }): { label: string } => ({
+    label: item.label
   }),
   defaultInitialValue: {
-    id: 'suzuki',
-    value: 'suzuki',
-    displayName: 'Suziki'
+    label: 'Suzuki'
   }
 };

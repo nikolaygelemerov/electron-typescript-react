@@ -1,6 +1,7 @@
 import { FC, memo, useEffect } from 'react';
 
 import { Main } from '@pages';
+import { PerformanceProvider } from '@providers';
 
 import styles from './App.scss';
 
@@ -10,9 +11,11 @@ const App: FC = () => {
   }, []);
 
   return (
-    <main className={styles.App}>
-      <Main />
-    </main>
+    <PerformanceProvider>
+      <main className={styles.App}>
+        <Main />
+      </main>
+    </PerformanceProvider>
   );
 };
 

@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, createContext, useContext } from 'react';
 
-import { DEFAULT_METRICS_COUNT, IActionsValue, IState, SCHEMA, useContextReducer } from '@services';
+import { DEFAULT_METRICS_COUNT, IActionsValue, SCHEMA, useContextReducer } from '@services';
 
 import { ActionType } from './action-types';
 import { TAction } from './actions';
 
 interface IInitialState {
-  [key: string]: unknown;
   category: IPerformanceCategory;
   metrics: IPerformanceMetric[];
   filespace: string;
@@ -79,20 +78,20 @@ export const initialContextState = {
 
 export const PerformanceContext = createContext(initialContextState);
 
-export const FilterProvider: FC<{ children: TChildren; actionTypes: { [key: string]: TAction } }> =
-  ({ children, actionTypes = ACTION_TYPES }): JSX.Element => {
-    const { value } = useContextReducer({
-      actionTypes,
-      initialState,
-      reducer: reducer as any
-    });
+export const PerformanceProvider: FC<{
+  children: TChildren;
+  actionTypes?: { [key: string]: TAction };
+}> = ({ children, actionTypes = ACTION_TYPES }): JSX.Element => {
+  const { value } = useContextReducer({
+    actionTypes,
+    initialState: initialState as any,
+    reducer: reducer as any
+  });
 
-    return (
-      <PerformanceContext.Provider value={value as any}>{children}</PerformanceContext.Provider>
-    );
-  };
+  return <PerformanceContext.Provider value={value as any}>{children}</PerformanceContext.Provider>;
+};
 
 export const usePerformance = (): {
-  state: IState;
+  state: IInitialState;
   actions: IActionsValue;
 } => useContext(PerformanceContext);
