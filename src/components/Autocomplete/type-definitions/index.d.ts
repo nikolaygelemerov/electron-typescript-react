@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, KeyboardEventHandler, RefObject } from 'react';
+import { FC, KeyboardEventHandler, RefObject, TransitionEventHandler } from 'react';
 
 interface IUseFieldParams {
   initialValue?: T;
@@ -19,9 +18,12 @@ interface IAutocompleteProps extends IUseFieldParams {
   inputValueExtractor: (item) => string;
   keyExtractor: (item) => string;
   list: any[];
+  multiselect?: boolean;
   Option: FC<IOptionProps>;
   onChange: Function;
+  placeholder?: string;
   rowsToDisplay?: number;
+  singleItemExtractor?: (item) => string;
   valid?: boolean;
   validating?: boolean;
   value: any;
@@ -36,6 +38,7 @@ interface IInputProps {
   name: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: KeyboardEventHandler;
+  placeholder?: string;
   toggleFocus: (isOnFocus: boolean) => void;
   touched: boolean;
   valid: boolean;
@@ -58,8 +61,10 @@ interface IListProps {
   inputValueExtractor: (item) => any;
   keyExtractor: (item) => string;
   list: any[];
+  multiselect?: boolean;
   onChange: Function;
   onKeyDown: KeyboardEventHandler;
+  onTransitionEnd: TransitionEventHandler;
   Option: FC<IOptionProps>;
   optionFocusedIndex: number | null;
   rowsToDisplay: number;

@@ -2,7 +2,7 @@ import { ActionType } from '../action-types';
 
 interface ISetCategoryAction {
   type: ActionType.SET_CATEGORY;
-  payload: number;
+  payload: IPerformanceCategory;
 }
 
 interface ISetMetricAction {

@@ -13,6 +13,7 @@ const Standard: FC<IInputProps> = ({
   name,
   onChange,
   onKeyDown,
+  placeholder,
   toggleFocus,
   touched,
   valid,
@@ -42,6 +43,7 @@ const Standard: FC<IInputProps> = ({
         toggleFocus(true);
       }}
       onKeyDown={onKeyDown}
+      placeholder={placeholder}
       value={value}
     />
   );

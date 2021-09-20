@@ -94,3 +94,15 @@ export const usePrevious = <T>(value: T) => {
 
   return refOld.current;
 };
+
+export const useMount = (callback: UpdateCallback) => {
+  useEffect(() => {
+    callback();
+  }, []);
+};
+
+type CleanupCallback = void | (() => void | undefined);
+
+export const useUnmount = (callback: CleanupCallback) => {
+  useEffect(() => callback, []);
+};

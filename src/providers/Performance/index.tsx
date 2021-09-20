@@ -14,7 +14,7 @@ interface IInitialState {
 
 const initialState: IInitialState = {
   category: SCHEMA[0],
-  metrics: SCHEMA[0].metrics.splice(0, DEFAULT_METRICS_COUNT),
+  metrics: SCHEMA[0].metrics.slice(0, DEFAULT_METRICS_COUNT),
   filespace: ''
 };
 
@@ -28,7 +28,7 @@ export const ACTION_TYPES = {
 const reducer = (state: IInitialState, action: TAction): IInitialState => {
   switch (action.type) {
     case ActionType.SET_CATEGORY:
-      return { ...state, category: SCHEMA[action.payload] };
+      return { ...state, category: action.payload };
 
     case ActionType.SET_METRIC:
       if (state.metrics.some((metric) => metric.label === action.payload.label)) {
@@ -45,7 +45,8 @@ const reducer = (state: IInitialState, action: TAction): IInitialState => {
       if (metricIndex === -1) {
         return state;
       } else {
-        const newMetrics = state.metrics.splice(metricIndex, 1);
+        const newMetrics = [...state.metrics];
+        newMetrics.splice(metricIndex, 1);
 
         return { ...state, metrics: newMetrics };
       }

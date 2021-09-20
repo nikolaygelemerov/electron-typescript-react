@@ -17,10 +17,12 @@ const List: FC<IListProps> = ({
   inputValueExtractor,
   keyExtractor,
   list,
+  multiselect,
   onChange,
   onKeyDown,
   Option,
   optionFocusedIndex,
+  onTransitionEnd,
   rowsToDisplay,
   toggleOptionFocus,
   value,
@@ -54,7 +56,7 @@ const List: FC<IListProps> = ({
         ? { maxHeight: rowsToDisplay * rowHeight }
         : {})
     }));
-  }, [rowRefs]);
+  }, [rowRefs, list]);
 
   useUpdate(() => {
     typeof optionFocusedIndex === 'number' && rowRefs[optionFocusedIndex]?.current?.focus();
@@ -74,7 +76,7 @@ const List: FC<IListProps> = ({
     <div
       className={styles.List}
       style={style}
-      onTransitionEnd={() => {
+      onTransitionEnd={(event) => {
         setStyle((prevStyle) => ({
           ...prevStyle
           // Remove native scroll
@@ -84,6 +86,8 @@ const List: FC<IListProps> = ({
         if (list.length < prevList.length) {
           setListToRender(list);
         }
+
+        onTransitionEnd && onTransitionEnd(event);
       }}
     >
       <Scroll {...scrollerOptions}>
@@ -93,7 +97,11 @@ const List: FC<IListProps> = ({
               ref={rowRefs[index]}
               displayName={displayNameExtractor(item)}
               key={keyExtractor(item)}
-              isSelected={inputValueExtractor(value) === inputValueExtractor(item)}
+              isSelected={
+                multiselect
+                  ? value.some((el: IPerformanceMetric) => el === item)
+                  : inputValueExtractor(value) === inputValueExtractor(item)
+              }
               onChange={onChange}
               onKeyDown={onKeyDown}
               toggleFocus={toggleOptionFocus}

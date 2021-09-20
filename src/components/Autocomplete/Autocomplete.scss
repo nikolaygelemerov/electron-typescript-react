@@ -1,3 +1,37 @@
 .Autocomplete {
+  position: relative;
   width: 20rem;
+
+  .ArrowBtn {
+    position: absolute;
+    top: 1.5rem;
+    right: 0.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .ArrowUp {
+    width: 0;
+    height: 0;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid lightgrey;
+    transform: rotate(180deg);
+    transition: transform 500ms ease-in-out;
+  }
+
+  .ArrowDown {
+    width: 0;
+    height: 0;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-top: 0.5rem solid lightgrey;
+    transform: rotate(-180deg);
+    transition: transform 500ms ease-in-out;
+  }
 }

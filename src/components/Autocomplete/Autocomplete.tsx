@@ -1,6 +1,6 @@
-import React, { FC, memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useRef, useState } from 'react';
 
-import { useUpdateOnly } from '@services';
+import { useClass, useMount, useUnmount, useUpdateOnly } from '@services';
 
 import { IAutocompleteProps, IOptionProps } from './type-definitions';
 import { useKeyCodes } from './hooks';
@@ -16,15 +16,22 @@ const Autocomplete: FC<IAutocompleteProps> = ({
   inputValueExtractor,
   keyExtractor,
   list,
+  multiselect,
   name,
   onChange,
   Option,
+  placeholder,
   rowsToDisplay = 4,
+  singleItemExtractor,
   valid = true,
   validating = false,
-  value = null,
+  value,
   valueExtractor
 }) => {
+  const autocompleteRef = useRef<HTMLDivElement>(null);
+  const documentClickHandlerRef = useRef<Function | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
   const [focus, setFocus] = useState(false);
 
   const [{ optionFocus, optionFocusedIndex }, setOptionState] = useState<{
@@ -52,18 +59,23 @@ const Autocomplete: FC<IAutocompleteProps> = ({
     setOptionState((prevState) => ({ ...prevState, optionFocus }));
   }, []);
 
-  const onInputChange = useCallback(
-    (event) => {
-      event.persist();
+  const onInputChange = useCallback((event) => {
+    event.persist();
 
+    setInputState((prevState) => ({
+      ...prevState,
+      inputValue: event.target.value
+    }));
+  }, []);
+
+  const onListTransitionEnd = useCallback(() => {
+    if (!focus && value && !multiselect) {
       setInputState((prevState) => ({
         ...prevState,
-        inputValue: event.target.value
+        inputValue: inputValueExtractor(value)
       }));
-      onChange(null);
-    },
-    [onChange]
-  );
+    }
+  }, [focus, inputValueExtractor, multiselect, value]);
 
   const toggInputleFocus = useCallback((inputFocus) => {
     setInputState((prevState) => ({
@@ -82,10 +94,55 @@ const Autocomplete: FC<IAutocompleteProps> = ({
     [onChange, toggInputleFocus, toggleOptionFocus]
   );
 
+  useMount(() => {
+    documentClickHandlerRef.current = (e: { target: Node }) => {
+      if (!autocompleteRef.current?.contains(e.target as Node)) {
+        setListResults([]);
+        setOptionState((prevState) => ({
+          ...prevState,
+          optionFocusedIndex: null
+        }));
+      }
+    };
+
+    document.addEventListener('click', documentClickHandlerRef.current as EventListener);
+  });
+
   useUpdateOnly(() => {
-    inputFocus &&
-      setListResults(list.filter((item) => inputValueExtractor(item).indexOf(inputValue) !== -1));
-  }, [inputFocus, inputValue, list]);
+    if (inputFocus) {
+      if (!multiselect) {
+        setListResults(
+          list.filter(
+            (item) =>
+              inputValueExtractor(item).toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
+          )
+        );
+      } else if (singleItemExtractor) {
+        setListResults(
+          list.filter(
+            (item) =>
+              singleItemExtractor(item).toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
+          )
+        );
+      }
+    }
+  }, [inputFocus, inputValue, list, multiselect]);
+
+  useUpdateOnly(() => {
+    if (isOpen) {
+      setListResults(list);
+    } else {
+      setListResults([]);
+    }
+  }, [isOpen]);
+
+  useUpdateOnly(() => {
+    if (listResults.length) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [listResults]);
 
   useUpdateOnly(() => {
     value &&
@@ -93,26 +150,47 @@ const Autocomplete: FC<IAutocompleteProps> = ({
         ...prevState,
         inputValue: inputValueExtractor(value)
       }));
-  }, [value]);
+  }, [multiselect, value]);
 
   useUpdateOnly(() => {
     setFocus(inputFocus || optionFocus);
   }, [inputFocus, optionFocus]);
 
   useUpdateOnly(() => {
-    if (!focus) {
+    if (!focus && !multiselect) {
       setListResults([]);
       setOptionState((prevState) => ({
         ...prevState,
         optionFocusedIndex: null
       }));
-      // !value &&
-      //   setInputState((prevState) => ({ ...prevState, inputValue: '' }));
     }
-  }, [focus]);
+  }, [focus, multiselect]);
+
+  useUpdateOnly(() => {
+    if (multiselect) {
+      if (inputFocus) {
+        setInputState((prevState) => ({
+          ...prevState,
+          inputValue: ''
+        }));
+      } else {
+        setInputState((prevState) => ({
+          ...prevState,
+          inputValue: inputValueExtractor(value)
+        }));
+      }
+    }
+  }, [inputFocus, multiselect]);
+
+  useUnmount(() => {
+    document.removeEventListener('click', documentClickHandlerRef.current as EventListener);
+  });
 
   return (
-    <div className={styles.Autocomplete}>
+    <div ref={autocompleteRef} className={styles.Autocomplete}>
+      <button className={styles.ArrowBtn} onClick={() => setIsOpen((prevState) => !prevState)}>
+        <div className={useClass([isOpen ? styles.ArrowDown : styles.ArrowUp], [isOpen])}></div>
+      </button>
       <Input
         autoComplete={autoComplete}
         disabled={disabled}
@@ -121,6 +199,7 @@ const Autocomplete: FC<IAutocompleteProps> = ({
         name={name}
         onChange={onInputChange}
         onKeyDown={onInputKeyDown}
+        placeholder={placeholder}
         toggleFocus={toggInputleFocus}
         touched={inputTouched}
         valid={valid}
@@ -132,8 +211,10 @@ const Autocomplete: FC<IAutocompleteProps> = ({
         inputValueExtractor={inputValueExtractor}
         keyExtractor={keyExtractor}
         list={listResults}
+        multiselect={multiselect}
         onChange={onOptionChange}
         onKeyDown={onOptionKeyDown}
+        onTransitionEnd={onListTransitionEnd}
         Option={Option}
         optionFocusedIndex={optionFocusedIndex}
         rowsToDisplay={rowsToDisplay}

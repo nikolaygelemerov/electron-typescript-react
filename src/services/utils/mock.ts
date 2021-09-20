@@ -1,5 +1,22 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const autocomplete = {
+  defaultDisplayNameExtractor: (item: { label: string }) => item.label,
+  defaultKeyExtractor: (item: { label: string }) => item.label,
+  defaultInputValueExtractor: (item: { label: any }) => item.label,
+  defaultValueExtractor: (item: any): any => item,
+  multiselectInputValueExtractor: (item: { label: string }[]) => {
+    return item.reduce((accum, el, index) => {
+      if (index === 0) {
+        accum = el.label;
+      } else {
+        accum += `, ${el.label}`;
+      }
+
+      return accum;
+    }, '');
+  }
+};
+
+export const autocomplete2 = {
   defaultList: [
     { id: 'bmw', value: 'bmw', displayName: 'BMW' },
     { id: 'mercedes', value: 'mercedes', displayName: 'Mercedes' },
@@ -12,13 +29,13 @@ export const autocomplete = {
     { id: 'ferrari', value: 'ferrari', displayName: 'Ferrari' },
     { id: 'scoda', value: 'scoda', displayName: 'Scoda' }
   ],
-  defaultDisplayNameExtractor: (item: { label: string }): string => item.label,
-  defaultKeyExtractor: (item: { label: string }): string => item?.label,
-  defaultInputValueExtractor: (item: { label: any }): any => item?.label,
-  defaultValueExtractor: (item: { label: string }): { label: string } => ({
-    label: item.label
-  }),
+  defaultDisplayNameExtractor: (item: any) => item?.displayName,
+  defaultKeyExtractor: (item: any) => item?.id,
+  defaultInputValueExtractor: (item: any) => item?.value,
+  defaultValueExtractor: (item: any) => ({ id: item?.id, value: item?.value }),
   defaultInitialValue: {
-    label: 'Suzuki'
+    id: 'suzuki',
+    value: 'suzuki',
+    displayName: 'Suziki'
   }
 };

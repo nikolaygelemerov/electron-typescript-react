@@ -1,15 +1,25 @@
-import { FC, memo } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 import { Autocomplete } from '@components';
 import { usePerformance } from '@providers';
-import { autocomplete } from '@services';
+import { autocomplete, SCHEMA } from '@services';
 
 const Main: FC = () => {
   const {
-    state: { category }
+    actions: { setCategory, setMetric, unsetMetric },
+    state: { category, metrics }
   } = usePerformance();
 
-  console.log('category: ', category);
+  const onMetricChange = useCallback(
+    (value: IPerformanceMetric) => {
+      if (metrics.some((item) => item === value)) {
+        unsetMetric(value);
+      } else {
+        setMetric(value);
+      }
+    },
+    [metrics, setMetric, unsetMetric]
+  );
 
   return (
     <>
@@ -19,25 +29,31 @@ const Main: FC = () => {
         inputValueExtractor={autocomplete.defaultInputValueExtractor}
         Input={Autocomplete.Input.Standard}
         keyExtractor={autocomplete.defaultKeyExtractor}
-        list={category.metrics}
+        list={SCHEMA}
         Option={Autocomplete.Option.Standard}
-        onChange={() => {}}
-        name="cars"
-        value={category.label}
+        onChange={setCategory}
+        name="category"
+        rowsToDisplay={3}
+        value={category}
         valueExtractor={autocomplete.defaultValueExtractor}
       />
       <br />
       <Autocomplete.Autocomplete
-        id="category"
+        key={category.label}
+        id="metrics"
         displayNameExtractor={autocomplete.defaultDisplayNameExtractor}
-        inputValueExtractor={autocomplete.defaultInputValueExtractor}
+        inputValueExtractor={autocomplete.multiselectInputValueExtractor}
         Input={Autocomplete.Input.Standard}
         keyExtractor={autocomplete.defaultKeyExtractor}
         list={category.metrics}
         Option={Autocomplete.Option.Standard}
-        onChange={() => {}}
-        name="cars"
-        value={category.label}
+        onChange={onMetricChange}
+        multiselect
+        name="metrics"
+        placeholder={'Metrics'}
+        rowsToDisplay={4}
+        singleItemExtractor={autocomplete.defaultInputValueExtractor}
+        value={metrics}
         valueExtractor={autocomplete.defaultValueExtractor}
       />
     </>
