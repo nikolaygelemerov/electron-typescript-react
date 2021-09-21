@@ -208,6 +208,12 @@ export const SCHEMA: IPerformanceCategory[] = [
         fields: ['totalPutObjectTime', 'putObjectRequests']
       }
     ]
+  },
+  {
+    name: '',
+    label: '',
+    path: '',
+    metrics: []
   }
 ];
 

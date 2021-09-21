@@ -8,7 +8,7 @@ declare module 'react-scroll-component' {
   export default Scroll;
 }
 
-type TChildren = (() => JSX.Element | JSX.Element[]) | JSX.Element | JSX.Element[];
+type TChildren = (() => JSX.Element | JSX.Element[]) | JSX.Element | JSX.Element[] | null;
 
 interface IPerformanceMetric {
   label: string;

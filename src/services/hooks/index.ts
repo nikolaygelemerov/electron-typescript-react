@@ -1,5 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DependencyList, EffectCallback, useEffect, useMemo, useRef, useReducer } from 'react';
+import {
+  DependencyList,
+  EffectCallback,
+  RefObject,
+  useEffect,
+  useMemo,
+  useRef,
+  useReducer
+} from 'react';
 
 export interface IState {
   [key: string]: unknown;
@@ -105,4 +113,27 @@ type CleanupCallback = void | (() => void | undefined);
 
 export const useUnmount = (callback: CleanupCallback) => {
   useEffect(() => callback, []);
+};
+
+type UseMutationObserverProps = {
+  callback: MutationCallback;
+  config: MutationObserverInit;
+  target: RefObject<Node>;
+};
+
+export const useMutationObserver = ({ callback, config, target }: UseMutationObserverProps) => {
+  const observerRef = useRef<MutationObserver | null>(null);
+
+  useUpdate(() => {
+    if (target.current && observerRef.current === null) {
+      observerRef.current = new MutationObserver(callback);
+      observerRef.current.observe(target.current, config);
+    }
+  }, [target.current]);
+
+  useUnmount(() => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+  });
 };

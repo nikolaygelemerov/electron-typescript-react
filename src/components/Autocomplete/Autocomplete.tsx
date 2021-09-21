@@ -1,5 +1,6 @@
 import { FC, memo, useCallback, useRef, useState } from 'react';
 
+import HeightTransitionBox from '@components/HeightTransitionBox/HeightTransitionBox';
 import { useClass, useMount, useUnmount, useUpdateOnly } from '@services';
 
 import { IAutocompleteProps, IOptionProps } from './type-definitions';
@@ -45,7 +46,7 @@ const Autocomplete: FC<IAutocompleteProps> = ({
   const [{ inputFocus, inputTouched, inputValue }, setInputState] = useState({
     inputFocus: false,
     inputTouched: false,
-    inputValue: inputValueExtractor(value, list) || ''
+    inputValue: multiselect ? '' : inputValueExtractor(value, list) || ''
   });
 
   const [listResults, setListResults] = useState<IOptionProps[]>([]);
@@ -102,6 +103,12 @@ const Autocomplete: FC<IAutocompleteProps> = ({
           ...prevState,
           optionFocusedIndex: null
         }));
+
+        multiselect &&
+          setInputState((prevState) => ({
+            ...prevState,
+            inputValue: ''
+          }));
       }
     };
 
@@ -145,12 +152,13 @@ const Autocomplete: FC<IAutocompleteProps> = ({
   }, [listResults]);
 
   useUpdateOnly(() => {
-    value &&
+    if (value && !multiselect) {
       setInputState((prevState) => ({
         ...prevState,
         inputValue: inputValueExtractor(value, list)
       }));
-  }, [value, list]);
+    }
+  }, [value, list, multiselect]);
 
   useUpdateOnly(() => {
     setFocus(inputFocus || optionFocus);
@@ -166,46 +174,43 @@ const Autocomplete: FC<IAutocompleteProps> = ({
     }
   }, [focus, multiselect]);
 
-  useUpdateOnly(() => {
-    if (multiselect) {
-      // if (inputFocus) {
-      //   setInputState((prevState) => ({
-      //     ...prevState,
-      //     inputValue: ''
-      //   }));
-      // } else {
-      //   setInputState((prevState) => ({
-      //     ...prevState,
-      //     inputValue: inputValueExtractor(value, list)
-      //   }));
-      // }
-    }
-  }, [inputFocus, list, multiselect]);
-
   useUnmount(() => {
     document.removeEventListener('click', documentClickHandlerRef.current as EventListener);
   });
 
   return (
     <div ref={autocompleteRef} className={styles.Autocomplete}>
-      <button className={styles.ArrowBtn} onClick={() => setIsOpen((prevState) => !prevState)}>
-        <div className={useClass([isOpen ? styles.ArrowDown : styles.ArrowUp], [isOpen])}></div>
-      </button>
-      <Input
-        autoComplete={autoComplete}
-        disabled={disabled}
-        focused={inputFocus}
-        id={id}
-        name={name}
-        onChange={onInputChange}
-        onKeyDown={onInputKeyDown}
-        placeholder={placeholder}
-        toggleFocus={toggInputleFocus}
-        touched={inputTouched}
-        valid={valid}
-        validating={validating}
-        value={inputValue}
-      />
+      <HeightTransitionBox>
+        {multiselect && Array.isArray(value) && value.length ? (
+          <div>
+            {value.map((item) => (
+              <button key={keyExtractor(item)} type="button" onClick={() => {}}>
+                {displayNameExtractor(item)}
+              </button>
+            ))}
+          </div>
+        ) : null}
+      </HeightTransitionBox>
+      <div className={styles.InputContainer}>
+        <button className={styles.ArrowBtn} onClick={() => setIsOpen((prevState) => !prevState)}>
+          <div className={useClass([isOpen ? styles.ArrowDown : styles.ArrowUp], [isOpen])}></div>
+        </button>
+        <Input
+          autoComplete={autoComplete}
+          disabled={disabled}
+          focused={inputFocus}
+          id={id}
+          name={name}
+          onChange={onInputChange}
+          onKeyDown={onInputKeyDown}
+          placeholder={placeholder}
+          toggleFocus={toggInputleFocus}
+          touched={inputTouched}
+          valid={valid}
+          validating={validating}
+          value={inputValue}
+        />
+      </div>
       <List
         displayNameExtractor={displayNameExtractor}
         inputValueExtractor={inputValueExtractor}

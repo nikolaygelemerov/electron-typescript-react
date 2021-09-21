@@ -1,6 +1,9 @@
 .Autocomplete {
-  position: relative;
   width: 20rem;
+
+  .InputContainer {
+    position: relative;
+  }
 
   .ArrowBtn {
     position: absolute;
