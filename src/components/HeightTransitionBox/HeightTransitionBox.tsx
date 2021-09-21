@@ -1,6 +1,6 @@
 import { FC, memo, RefObject, useCallback, useRef, useState } from 'react';
 
-import { useMutationObserver, usePrevious, useUpdateOnly } from '@services';
+import { useMutationObserver } from '@services';
 
 import { IHeightTransitionBox } from './type-definitions';
 
@@ -14,7 +14,6 @@ const MUTATION_OBSERVER_CONFIG = {
 const HeightTransitionBox: FC<IHeightTransitionBox> = ({
   children,
   onTransitionEnd,
-  persistChildrenOnCollapse,
   transtionDuration,
   transitionType
 }) => {
@@ -32,29 +31,6 @@ const HeightTransitionBox: FC<IHeightTransitionBox> = ({
     target: contentRef
   });
 
-  const isTransitioningRef = useRef(false);
-
-  const [childrenToRender, setChildrenToRender] = useState(children);
-  const prevChildren = usePrevious(children);
-  const prevHeight = usePrevious(contentRef.current?.offsetHeight);
-
-  useUpdateOnly(async () => {
-    if (!persistChildrenOnCollapse) return;
-
-    if (
-      prevHeight &&
-      contentRef.current?.offsetHeight &&
-      prevHeight > contentRef.current?.offsetHeight
-    ) {
-      if (isTransitioningRef.current === false) {
-        isTransitioningRef.current = true;
-        setChildrenToRender(prevChildren);
-      }
-    } else {
-      setChildrenToRender(children);
-    }
-  }, [contentRef.current?.offsetHeight]);
-
   return (
     <div
       onTransitionEnd={(event) => {
@@ -63,13 +39,6 @@ const HeightTransitionBox: FC<IHeightTransitionBox> = ({
         if (event.propertyName == 'height') {
           onTransitionEnd && onTransitionEnd(event);
           observerCallback();
-
-          if (!persistChildrenOnCollapse) return;
-
-          if (isTransitioningRef.current === true) {
-            isTransitioningRef.current = false;
-            setChildrenToRender(children);
-          }
         }
       }}
       style={{
@@ -86,24 +55,7 @@ const HeightTransitionBox: FC<IHeightTransitionBox> = ({
           position: 'relative'
         }}
       >
-        {persistChildrenOnCollapse ? (
-          <>
-            <div style={{ visibility: 'hidden' }}>{children}</div>
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%'
-              }}
-            >
-              {childrenToRender}
-            </div>
-          </>
-        ) : (
-          children
-        )}
+        {children}
       </div>
     </div>
   );

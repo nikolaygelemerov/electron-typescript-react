@@ -183,25 +183,27 @@ const Autocomplete: FC<IAutocompleteProps> = ({
 
   return (
     <div ref={autocompleteRef} className={styles.Autocomplete}>
-      <HeightTransitionBox>
-        {multiselect && Array.isArray(value) && value.length ? (
-          <div>
-            {value.map((item) => (
-              <button
-                className={styles.ChipBtn}
-                data-test="autocomplete-chip"
-                key={keyExtractor(item)}
-                type="button"
-                onClick={() => {
-                  onChange(item);
-                }}
-              >
-                {displayNameExtractor(item)}
-              </button>
-            ))}
-          </div>
-        ) : null}
-      </HeightTransitionBox>
+      {multiselect ? (
+        <HeightTransitionBox>
+          {Array.isArray(value) && value.length ? (
+            <div>
+              {value.map((item) => (
+                <button
+                  className={styles.ChipBtn}
+                  data-test="autocomplete-chip"
+                  key={keyExtractor(item)}
+                  type="button"
+                  onClick={() => {
+                    onChange(item);
+                  }}
+                >
+                  {displayNameExtractor(item)}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </HeightTransitionBox>
+      ) : null}
       <div className={styles.InputContainer}>
         <button className={styles.ArrowBtn} onClick={() => setIsOpen((prevState) => !prevState)}>
           <div className={useClass([isOpen ? styles.ArrowDown : styles.ArrowUp], [isOpen])}></div>
