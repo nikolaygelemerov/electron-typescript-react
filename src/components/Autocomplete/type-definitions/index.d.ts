@@ -15,7 +15,7 @@ interface IAutocompleteProps extends IUseFieldParams {
   id: string;
   initialValue?: any;
   Input: FC<IInputProps>;
-  inputValueExtractor: (item) => string;
+  inputValueExtractor: (item, list) => any;
   keyExtractor: (item) => string;
   list: any[];
   multiselect?: boolean;
@@ -58,7 +58,7 @@ interface IOptionProps {
 
 interface IListProps {
   displayNameExtractor: (item) => string;
-  inputValueExtractor: (item) => any;
+  inputValueExtractor: (item, list) => any;
   keyExtractor: (item) => string;
   list: any[];
   multiselect?: boolean;

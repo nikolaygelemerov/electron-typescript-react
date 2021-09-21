@@ -45,7 +45,7 @@ const Autocomplete: FC<IAutocompleteProps> = ({
   const [{ inputFocus, inputTouched, inputValue }, setInputState] = useState({
     inputFocus: false,
     inputTouched: false,
-    inputValue: inputValueExtractor(value) || ''
+    inputValue: inputValueExtractor(value, list) || ''
   });
 
   const [listResults, setListResults] = useState<IOptionProps[]>([]);
@@ -72,10 +72,10 @@ const Autocomplete: FC<IAutocompleteProps> = ({
     if (!focus && value && !multiselect) {
       setInputState((prevState) => ({
         ...prevState,
-        inputValue: inputValueExtractor(value)
+        inputValue: inputValueExtractor(value, list)
       }));
     }
-  }, [focus, inputValueExtractor, multiselect, value]);
+  }, [focus, inputValueExtractor, list, multiselect, value]);
 
   const toggInputleFocus = useCallback((inputFocus) => {
     setInputState((prevState) => ({
@@ -114,7 +114,7 @@ const Autocomplete: FC<IAutocompleteProps> = ({
         setListResults(
           list.filter(
             (item) =>
-              inputValueExtractor(item).toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
+              inputValueExtractor(item, list).toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
           )
         );
       } else if (singleItemExtractor) {
@@ -148,9 +148,9 @@ const Autocomplete: FC<IAutocompleteProps> = ({
     value &&
       setInputState((prevState) => ({
         ...prevState,
-        inputValue: inputValueExtractor(value)
+        inputValue: inputValueExtractor(value, list)
       }));
-  }, [multiselect, value]);
+  }, [value, list]);
 
   useUpdateOnly(() => {
     setFocus(inputFocus || optionFocus);
@@ -168,19 +168,19 @@ const Autocomplete: FC<IAutocompleteProps> = ({
 
   useUpdateOnly(() => {
     if (multiselect) {
-      if (inputFocus) {
-        setInputState((prevState) => ({
-          ...prevState,
-          inputValue: ''
-        }));
-      } else {
-        setInputState((prevState) => ({
-          ...prevState,
-          inputValue: inputValueExtractor(value)
-        }));
-      }
+      // if (inputFocus) {
+      //   setInputState((prevState) => ({
+      //     ...prevState,
+      //     inputValue: ''
+      //   }));
+      // } else {
+      //   setInputState((prevState) => ({
+      //     ...prevState,
+      //     inputValue: inputValueExtractor(value, list)
+      //   }));
+      // }
     }
-  }, [inputFocus, multiselect]);
+  }, [inputFocus, list, multiselect]);
 
   useUnmount(() => {
     document.removeEventListener('click', documentClickHandlerRef.current as EventListener);

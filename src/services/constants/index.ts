@@ -208,8 +208,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         fields: ['totalPutObjectTime', 'putObjectRequests']
       }
     ]
-  },
-  { name: '', label: '', path: '', metrics: [] }
+  }
 ];
 
 export const DEFAULT_METRICS_COUNT = 3;
