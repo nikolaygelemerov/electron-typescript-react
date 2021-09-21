@@ -5,6 +5,22 @@
     position: relative;
   }
 
+  .ChipBtn {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    color: $colorTxt;
+    font-size: 1.2rem;
+    background-color: transparent;
+    border: 0.1rem solid $color2;
+    border-radius: 0.4rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color3;
+    }
+  }
+
   .ArrowBtn {
     position: absolute;
     top: 1.5rem;

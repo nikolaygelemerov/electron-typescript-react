@@ -97,7 +97,10 @@ const Autocomplete: FC<IAutocompleteProps> = ({
 
   useMount(() => {
     documentClickHandlerRef.current = (e: { target: Node }) => {
-      if (!autocompleteRef.current?.contains(e.target as Node)) {
+      if (
+        !autocompleteRef.current?.contains(e.target as Node) &&
+        !((e.target as any)?.attributes['data-test']?.value === 'autocomplete-chip')
+      ) {
         setListResults([]);
         setOptionState((prevState) => ({
           ...prevState,
@@ -184,7 +187,15 @@ const Autocomplete: FC<IAutocompleteProps> = ({
         {multiselect && Array.isArray(value) && value.length ? (
           <div>
             {value.map((item) => (
-              <button key={keyExtractor(item)} type="button" onClick={() => {}}>
+              <button
+                className={styles.ChipBtn}
+                data-test="autocomplete-chip"
+                key={keyExtractor(item)}
+                type="button"
+                onClick={() => {
+                  onChange(item);
+                }}
+              >
                 {displayNameExtractor(item)}
               </button>
             ))}
