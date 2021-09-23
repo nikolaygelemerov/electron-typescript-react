@@ -1,6 +1,6 @@
 import { FC, memo, useCallback } from 'react';
 
-import { Autocomplete } from '@components';
+import { Autocomplete, useModal } from '@components';
 import { usePerformance } from '@providers';
 import { autocomplete, SCHEMA } from '@services';
 
@@ -11,6 +11,13 @@ const Main: FC = () => {
     actions: { setCategory, setMetric, unsetMetric },
     state: { category, metrics }
   } = usePerformance();
+
+  const {
+    actions: { showModalById },
+    modalsToShow
+  } = useModal();
+
+  console.log('modalsToShow: ', modalsToShow);
 
   const onMetricChange = useCallback(
     (value: IPerformanceMetric) => {
@@ -25,6 +32,18 @@ const Main: FC = () => {
 
   return (
     <>
+      <button
+        type="button"
+        onClick={() => {
+          showModalById({
+            id: 'Some Modal',
+            content: <p>Hello</p>
+          });
+        }}
+      >
+        Open Modal
+      </button>
+      <button type="button">Close Modal</button>
       <aside className={styles.Sidebar}>
         <Autocomplete.Autocomplete
           id="category"

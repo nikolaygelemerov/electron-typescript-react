@@ -16,6 +16,7 @@ interface IPerformanceMetric {
   group: string;
   type: string;
   fields: string[];
+  color: string;
 }
 
 interface IPerformanceCategory {
