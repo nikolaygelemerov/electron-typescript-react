@@ -12,6 +12,7 @@ interface IAutocompleteProps extends IUseFieldParams {
   autoComplete?: string;
   disabled?: boolean;
   displayNameExtractor: (item) => string;
+  hideScroll?: boolean;
   id: string;
   initialValue?: any;
   Input: FC<IInputProps>;
@@ -58,6 +59,7 @@ interface IOptionProps {
 
 interface IListProps {
   displayNameExtractor: (item) => string;
+  hideScroll?: boolean;
   inputValueExtractor: (item, list) => any;
   keyExtractor: (item) => string;
   list: any[];

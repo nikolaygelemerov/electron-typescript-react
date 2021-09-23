@@ -49,12 +49,7 @@ const HeightTransitionBox: FC<IHeightTransitionBox> = ({
         }ms ${typeof transitionType !== 'undefined' ? transitionType : 'ease-in-out'}`
       }}
     >
-      <div
-        ref={contentRef as RefObject<HTMLDivElement>}
-        style={{
-          position: 'relative'
-        }}
-      >
+      <div data-test="height-trainsition-box" ref={contentRef as RefObject<HTMLDivElement>}>
         {children}
       </div>
     </div>

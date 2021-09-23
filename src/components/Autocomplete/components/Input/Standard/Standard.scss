@@ -2,21 +2,30 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 5rem;
-  padding: 0 $offsetLarge 0 $offsetLarge;
-  font-size: $fontXL;
-  letter-spacing: 0.2rem;
+  height: 4.2rem;
+  padding: 0 $offsetSmall;
+  color: $color_8_brand;
+  font-size: $fontLarge;
   text-align: center;
-  background-color: $color4;
+  background-color: $color_3_brand;
   border-radius: $borderRadius;
+  box-shadow: $boxShadow_2;
   transition: all $transitionNormal ease-in-out;
+
+  &::placeholder {
+    color: rgba($color: $color_8_brand, $alpha: 0.8);
+
+    &:focus {
+      color: rgba($color: $color_2_brand, $alpha: 0.8);
+    }
+  }
 
   &::selection {
     background: $color9;
   }
 
   &.Active {
-    color: $color4;
+    color: $color_2_brand;
     background-color: transparent;
   }
 

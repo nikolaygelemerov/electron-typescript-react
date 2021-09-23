@@ -1,5 +1,5 @@
 .Autocomplete {
-  width: 20rem;
+  width: 100%;
 
   .InputContainer {
     position: relative;
@@ -9,21 +9,24 @@
     display: inline-block;
     margin: 0.5rem;
     padding: 0.5rem;
-    color: $colorTxt;
+    color: $color_3_brand;
     font-size: 1.2rem;
     background-color: transparent;
-    border: 0.1rem solid $color2;
+    border: 0.1rem solid $color_6_brand;
     border-radius: 0.4rem;
+    box-shadow: $boxShadow_2;
+    transition: all $transitionNormal ease-in-out;
     cursor: pointer;
 
     &:hover {
-      background-color: $color3;
+      color: $color_1_brand;
+      background-color: $color_2_brand;
+      border-color: $color_1_brand;
     }
   }
 
   .ArrowBtn {
     position: absolute;
-    top: 1.5rem;
     right: 0.4rem;
     display: flex;
     justify-content: center;
@@ -32,6 +35,8 @@
     height: 2rem;
     background-color: transparent;
     cursor: pointer;
+
+    @include centerY();
   }
 
   .ArrowUp {
@@ -39,7 +44,7 @@
     height: 0;
     border-left: 0.5rem solid transparent;
     border-right: 0.5rem solid transparent;
-    border-bottom: 0.5rem solid lightgrey;
+    border-bottom: 0.5rem solid $color_8_brand;
     transform: rotate(180deg);
     transition: transform 500ms ease-in-out;
   }
@@ -49,8 +54,12 @@
     height: 0;
     border-left: 0.5rem solid transparent;
     border-right: 0.5rem solid transparent;
-    border-top: 0.5rem solid lightgrey;
+    border-top: 0.5rem solid $color_8_brand;
     transform: rotate(-180deg);
     transition: transform 500ms ease-in-out;
+  }
+
+  .ArrowOnInputFocus {
+    border-top: 0.5rem solid $color_3_brand;
   }
 }

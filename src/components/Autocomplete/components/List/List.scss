@@ -1,9 +1,11 @@
 .List {
   display: inline-block;
+  margin-top: $offsetMin;
   width: 100%;
   overflow-y: hidden;
   transition: height 400ms ease-out;
-  background-color: $color2;
+  background-color: transparent;
+  border-radius: $borderRadius;
 }
 
 .Scroller {
@@ -11,8 +13,12 @@
   z-index: 1;
   width: $offsetTiny;
   opacity: 1;
-  background-color: rgba($colorNav, 0.5);
+  background-color: rgba($color_2_brand, 1);
   border-radius: $borderRadius;
+
+  &.ScrollerHide {
+    opacity: 0;
+  }
 }
 
 .ScrollerContainer {

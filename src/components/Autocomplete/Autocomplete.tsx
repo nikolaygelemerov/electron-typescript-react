@@ -12,6 +12,7 @@ const Autocomplete: FC<IAutocompleteProps> = ({
   autoComplete,
   disabled,
   displayNameExtractor,
+  hideScroll,
   id,
   Input,
   inputValueExtractor,
@@ -98,8 +99,9 @@ const Autocomplete: FC<IAutocompleteProps> = ({
   useMount(() => {
     documentClickHandlerRef.current = (e: { target: Node }) => {
       if (
-        !autocompleteRef.current?.contains(e.target as Node) &&
-        !((e.target as any)?.attributes['data-test']?.value === 'autocomplete-chip')
+        (!autocompleteRef.current?.contains(e.target as Node) &&
+          !((e.target as any)?.attributes['data-test']?.value === 'autocomplete-chip')) ||
+        (e.target as any)?.attributes['data-test']?.value === 'height-trainsition-box'
       ) {
         setListResults([]);
         setOptionState((prevState) => ({
@@ -185,9 +187,8 @@ const Autocomplete: FC<IAutocompleteProps> = ({
     <div ref={autocompleteRef} className={styles.Autocomplete}>
       {multiselect ? (
         <HeightTransitionBox>
-          {Array.isArray(value) && value.length ? (
-            <div>
-              {value.map((item) => (
+          {Array.isArray(value) && value.length
+            ? value.map((item) => (
                 <button
                   className={styles.ChipBtn}
                   data-test="autocomplete-chip"
@@ -199,14 +200,18 @@ const Autocomplete: FC<IAutocompleteProps> = ({
                 >
                   {displayNameExtractor(item)}
                 </button>
-              ))}
-            </div>
-          ) : null}
+              ))
+            : null}
         </HeightTransitionBox>
       ) : null}
       <div className={styles.InputContainer}>
         <button className={styles.ArrowBtn} onClick={() => setIsOpen((prevState) => !prevState)}>
-          <div className={useClass([isOpen ? styles.ArrowDown : styles.ArrowUp], [isOpen])}></div>
+          <div
+            className={useClass(
+              [isOpen ? styles.ArrowDown : styles.ArrowUp, inputFocus && styles.ArrowOnInputFocus],
+              [isOpen]
+            )}
+          ></div>
         </button>
         <Input
           autoComplete={autoComplete}
@@ -226,6 +231,7 @@ const Autocomplete: FC<IAutocompleteProps> = ({
       </div>
       <List
         displayNameExtractor={displayNameExtractor}
+        hideScroll={hideScroll}
         inputValueExtractor={inputValueExtractor}
         keyExtractor={keyExtractor}
         list={listResults}

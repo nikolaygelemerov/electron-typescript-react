@@ -27,7 +27,7 @@ const Standard: FC<IInputProps> = ({
         [
           styles.Standard,
           touched && !focused && !valid && !validating && styles.Error,
-          (focused || value) && styles.Active,
+          focused && styles.Active,
           touched && !focused && !validating && !valid && !value && styles.Empty
         ],
         [focused, touched, valid, validating]

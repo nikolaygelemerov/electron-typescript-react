@@ -6,14 +6,9 @@ import { usePrevious, useUpdate, useUpdateOnly } from '@services';
 import { IListProps } from '../../type-definitions';
 import styles from './List.scss';
 
-const SCROLLER_OPTIONS = {
-  className: styles.ScrollerContainer,
-  direction: 'vertical',
-  scrollerClass: styles.Scroller
-};
-
 const List: FC<IListProps> = ({
   displayNameExtractor,
+  hideScroll,
   inputValueExtractor,
   keyExtractor,
   list,
@@ -37,10 +32,12 @@ const List: FC<IListProps> = ({
 
   const scrollerOptions = useMemo(() => {
     return {
-      ...SCROLLER_OPTIONS,
-      height: style.maxHeight
+      className: styles.ScrollerContainer,
+      direction: 'vertical',
+      height: style.maxHeight,
+      scrollerClass: [styles.Scroller, hideScroll && styles.ScrollerHide].filter(Boolean).join(' ')
     };
-  }, [style.maxHeight]);
+  }, [hideScroll, style.maxHeight]);
 
   useUpdate(() => {
     setRowRefs(listToRender.map(() => createRef()));
