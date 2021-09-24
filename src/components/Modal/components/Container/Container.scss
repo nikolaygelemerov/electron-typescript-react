@@ -2,6 +2,9 @@
   position: fixed;
   top: 0;
   left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
   padding: 5rem 0;
@@ -10,25 +13,10 @@
   cursor: default;
 
   .Content {
-    display: inline-block;
+    padding: $offsetLarge;
+    background-color: $color_10_brand;
+    border-radius: $borderRadius;
 
-    &.WithInnerScroll {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    &.WithTransition {
-      transition: margin-top 300ms ease-in-out;
-    }
-
-    .InnerScrollContent {
-      position: relative;
-      display: inline-block;
-      text-align: initial;
-
-      &:hover [data-dragger-ref="dragger"] {
-        border-color: $color4;
-      }
-    }
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 }

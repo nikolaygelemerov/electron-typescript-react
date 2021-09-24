@@ -1,21 +1,32 @@
-import { FC, memo, useCallback } from 'react';
+import { AnimationEventHandler, FC, memo, useCallback, useMemo, useState } from 'react';
 
-import { useClass } from '@services';
+import { useClass, useUpdate } from '@services';
 
-import { IContainerProps } from './type-definitions';
+import { IModal } from '../../type-definitions';
 
 import styles from './Container.scss';
 
-const Container: FC<IContainerProps> = (props) => {
+const Container: FC<IModal> = (props) => {
   const {
     children,
+    closeContainerClass,
     containerClass,
     content,
     contentClass,
     hideModal,
     onClose,
+    onAnimationEnd,
     preventModalBackdropClick
   } = props;
+
+  const [containerClasses, setContainerClasses] = useState<string[]>([styles.Container]);
+
+  const onCloseHandler = useCallback(() => {
+    hideModal && hideModal();
+    onClose && onClose();
+
+    setContainerClasses((prevState) => [...prevState, closeContainerClass as string]);
+  }, [closeContainerClass, hideModal, onClose]);
 
   const onBackdropCloseHandler = useCallback(
     (event) => {
@@ -24,36 +35,37 @@ const Container: FC<IContainerProps> = (props) => {
         (event.target.className.indexOf(styles.Container) !== -1 ||
           event.target.className.indexOf(styles.Content) !== -1)
       ) {
-        hideModal();
-        typeof onClose === 'function' && onClose();
+        onCloseHandler();
       }
     },
-    [hideModal, onClose]
+    [onCloseHandler]
   );
 
-  const onCloseHandler = useCallback(() => {
-    hideModal();
-    typeof onClose === 'function' && onClose();
-  }, [hideModal, onClose]);
-
-  const renderChildrenContent = useCallback(() => {
+  const renderChildrenContent = useMemo(() => {
     const output = children || content || null;
 
     const renderOutput =
       typeof output === 'function' ? output({ ...props, onClose: onCloseHandler }) : output;
-    console.log('renderOutput: ', renderOutput);
+
     return renderOutput;
   }, [children, content, props, onCloseHandler]);
 
+  useUpdate(() => {
+    setContainerClasses((prevState) => [...prevState, containerClass as string]);
+  }, [containerClass]);
+
+  console.log('containerClasses: ', containerClasses);
+
   return (
     <div
-      className={useClass([styles.Container, containerClass], [containerClass])}
+      className={useClass(containerClasses, [containerClasses])}
       onClick={(event) => {
         !preventModalBackdropClick && onBackdropCloseHandler(event);
       }}
+      onAnimationEnd={onAnimationEnd as AnimationEventHandler<HTMLDivElement>}
     >
       <section className={useClass([styles.Content, contentClass], [contentClass])}>
-        <div className={styles.InnerScrollContent}>{<div>Hello</div>}</div>
+        {renderChildrenContent}
       </section>
     </div>
   );

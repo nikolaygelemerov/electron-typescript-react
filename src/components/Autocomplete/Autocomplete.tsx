@@ -209,7 +209,7 @@ const Autocomplete: FC<IAutocompleteProps> = ({
           <div
             className={useClass(
               [isOpen ? styles.ArrowDown : styles.ArrowUp, inputFocus && styles.ArrowOnInputFocus],
-              [isOpen]
+              [inputFocus, isOpen]
             )}
           ></div>
         </button>

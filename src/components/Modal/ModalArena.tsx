@@ -22,23 +22,25 @@ const ModalArena: FC = () => {
       orderList.forEach(({ id }) => {
         setModal({ id });
       });
+    } else {
+      //  setModal({});
     }
   }, [orderList, setModal]);
 
-  useUpdateOnly(() => {
-    if (Object.keys(modalsToShow).length) {
-      appStyle.current.filter = 'blur(2px)';
-    } else {
-      appStyle.current.filter = 'none';
-    }
-  }, [modalsToShow]);
+  // useUpdateOnly(() => {
+  //   if (Object.keys(modalsToShow).length) {
+  //     appStyle.current.filter = 'blur(2px)';
+  //   } else {
+  //     appStyle.current.filter = 'none';
+  //   }
+  // }, [modalsToShow]);
 
   return (
     <>
       {Object.keys(modalsToShow).map((modalName) => {
-        const { id, local, ...otherProps } = modalsToShow[modalName];
+        const { id, ...otherProps } = modalsToShow[modalName];
 
-        return modalEl && !local
+        return modalEl
           ? ReactDOM.createPortal(
               <Container
                 key={modalName}

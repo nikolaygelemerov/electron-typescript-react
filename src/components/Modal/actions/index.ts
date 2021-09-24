@@ -71,6 +71,8 @@ export const hideModalById: (
   setState((prevState) => {
     const { id } = modalToHide;
 
+    console.log('id to remove: ', id);
+
     const orderList = [...prevState.orderList];
     const modalToHideIndex = orderList.findIndex((modal) => modal.id === id);
 

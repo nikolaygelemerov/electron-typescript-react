@@ -13,37 +13,37 @@ const Main: FC = () => {
   } = usePerformance();
 
   const {
-    actions: { showModalById },
-    modalsToShow
+    actions: { setModal, showModalById },
+    orderList
   } = useModal();
-
-  console.log('modalsToShow: ', modalsToShow);
 
   const onMetricChange = useCallback(
     (value: IPerformanceMetric) => {
       if (metrics.some((item) => item === value)) {
         unsetMetric(value);
       } else {
-        setMetric(value);
+        if (metrics.length === 3) {
+          showModalById({
+            id: 'Some Modal',
+            closeContainerClass: styles.ModalContainerClose,
+            containerClass: styles.ModalContainer,
+            content: <p>Hesllo</p>,
+            onAnimationEnd: () => {
+              if (orderList.length === 0) {
+                setModal({});
+              }
+            }
+          });
+        } else {
+          setMetric(value);
+        }
       }
     },
-    [metrics, setMetric, unsetMetric]
+    [metrics, orderList.length, setMetric, setModal, showModalById, unsetMetric]
   );
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => {
-          showModalById({
-            id: 'Some Modal',
-            content: <p>Hello</p>
-          });
-        }}
-      >
-        Open Modal
-      </button>
-      <button type="button">Close Modal</button>
       <aside className={styles.Sidebar}>
         <Autocomplete.Autocomplete
           id="category"
