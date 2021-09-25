@@ -96,7 +96,7 @@ const List: FC<IListProps> = ({
               key={keyExtractor(item)}
               isSelected={
                 multiselect
-                  ? value.some((el: IPerformanceMetric) => el === item)
+                  ? value.some((el: IMetric) => el === item)
                   : inputValueExtractor(value, list) === inputValueExtractor(item, list)
               }
               onChange={onChange}

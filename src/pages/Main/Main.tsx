@@ -1,8 +1,10 @@
 import { FC, memo, useCallback } from 'react';
 
 import { Autocomplete, Icons, useModal } from '@components';
-import { usePerformance } from '@providers';
+import { useMetrics } from '@providers';
 import { autocomplete, SCHEMA } from '@services';
+
+import { PerformanceBoard } from './components';
 
 import styles from './Main.scss';
 
@@ -10,14 +12,14 @@ const Main: FC = () => {
   const {
     actions: { setCategory, setMetric, unsetMetric },
     state: { category, metrics }
-  } = usePerformance();
+  } = useMetrics();
 
   const {
     actions: { showModalById }
   } = useModal();
 
   const onMetricChange = useCallback(
-    (value: IPerformanceMetric) => {
+    (value: IMetric) => {
       if (metrics.some((item) => item === value)) {
         unsetMetric(value);
       } else {
@@ -78,7 +80,7 @@ const Main: FC = () => {
           valueExtractor={autocomplete.defaultValueExtractor}
         />
       </aside>
-      <section className={styles.Main}></section>
+      <PerformanceBoard />
     </>
   );
 };

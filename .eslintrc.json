@@ -14,7 +14,8 @@
   "globals": {
     "ChangeEvent": true,
     "JSX": true,
-    "IPerformanceCategory": true,
+    "IMetricCategory": true,
+    "IMetric": true,
     "IPerformanceMetric": true,
     "ISvgIcon": true,
     "TChildren": true

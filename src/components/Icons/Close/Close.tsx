@@ -3,8 +3,6 @@ import { FC, memo } from 'react';
 import { useClass } from '@services';
 import colors from '@styles/shared/_variables.scss';
 
-console.log('colors: ', colors);
-
 import styles from './Close.scss';
 
 export const Close: FC<ISvgIcon> = ({ className, fill, height, width, ...otherProps }) => {

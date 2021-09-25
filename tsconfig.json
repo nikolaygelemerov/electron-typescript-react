@@ -56,6 +56,7 @@
       "@root/*": ["../*"],
       "@components": ["./components"],
       "@components/*": ["./components/*"],
+      "@managers": ["./managers"],
       "@managers/*": ["./managers/*"],
       "@pages": ["./pages"],
       "@pages/*": ["./pages/*"],

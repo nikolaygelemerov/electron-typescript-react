@@ -1,27 +1,13 @@
 import { ActionType } from '../action-types';
 
-interface ISetCategoryAction {
-  type: ActionType.SET_CATEGORY;
-  payload: IPerformanceCategory;
+interface ISetPerformanceMetricsAction {
+  type: ActionType.SET_PERFORMANCE_METRICS;
+  payload: { [key: string]: IPerformanceMetric };
 }
 
-interface ISetMetricAction {
-  type: ActionType.SET_METRIC;
+interface IUpdatePerformanceMetricAction {
+  type: ActionType.UPDATE_PERFORMANCE_METRIC;
   payload: IPerformanceMetric;
 }
 
-interface ISetFilespaceAction {
-  type: ActionType.SET_FILESPACE;
-  payload: string;
-}
-
-interface IUnsetMetricAction {
-  type: ActionType.UNSET_METRIC;
-  payload: IPerformanceMetric;
-}
-
-export type TAction =
-  | ISetCategoryAction
-  | ISetMetricAction
-  | ISetFilespaceAction
-  | IUnsetMetricAction;
+export type TAction = ISetPerformanceMetricsAction | IUpdatePerformanceMetricAction;

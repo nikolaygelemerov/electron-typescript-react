@@ -59,8 +59,6 @@ const Container: FC<IModal> = (props) => {
     return renderOutput;
   }, [children, content, props, onCloseHandler]);
 
-  console.log('contentClass: ', contentClass);
-
   return (
     <div
       className={useClass(

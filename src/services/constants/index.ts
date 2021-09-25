@@ -1,6 +1,6 @@
 import colors from '@styles/shared/_variables.scss';
 
-export const SCHEMA: IPerformanceCategory[] = [
+export const SCHEMA: IMetricCategory[] = [
   {
     name: 'fs',
     label: 'File system',
@@ -12,6 +12,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['totalBytesRead'],
+        category: 'fs',
         color: colors.color1
       },
       {
@@ -20,6 +21,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['totalBytesWritten'],
+        category: 'fs',
         color: colors.color2
       },
       {
@@ -28,6 +30,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['totalReads'],
+        category: 'fs',
         color: colors.color3
       },
       {
@@ -36,6 +39,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['totalWrites'],
+        category: 'fs',
         color: colors.color4
       },
       {
@@ -44,6 +48,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['totalOps'],
+        category: 'fs',
         color: colors.color5
       },
       {
@@ -52,6 +57,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'latency',
         type: 'AverageTime',
         fields: ['totalReadTime', 'totalReads'],
+        category: 'fs',
         color: colors.color6
       },
       {
@@ -60,6 +66,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'latency',
         type: 'AverageTime',
         fields: ['totalWriteTime', 'totalWrites'],
+        category: 'fs',
         color: colors.color7
       },
       {
@@ -68,6 +75,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'latency',
         type: 'AverageTime',
         fields: ['totalOpTime', 'totalOps'],
+        category: 'fs',
         color: colors.color8
       }
     ]
@@ -83,6 +91,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['totalBytesRead'],
+        category: 'cache',
         color: colors.color9
       },
       {
@@ -91,6 +100,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['totalBytesHit'],
+        category: 'cache',
         color: colors.color10
       },
       {
@@ -99,6 +109,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['totalBytesMissed'],
+        category: 'cache',
         color: colors.color11
       },
       {
@@ -107,6 +118,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['prefetchBytes'],
+        category: 'cache',
         color: colors.color12
       },
       {
@@ -115,6 +127,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['totalBytesWritten'],
+        category: 'cache',
         color: colors.color13
       },
       {
@@ -123,6 +136,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['totalReads'],
+        category: 'cache',
         color: colors.color14
       },
       {
@@ -131,6 +145,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['totalHits'],
+        category: 'cache',
         color: colors.color15
       },
       {
@@ -139,6 +154,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['totalMisses'],
+        category: 'cache',
         color: colors.color16
       },
       {
@@ -147,6 +163,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['prefetches'],
+        category: 'cache',
         color: colors.color17
       },
       {
@@ -155,6 +172,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['totalWrites'],
+        category: 'cache',
         color: colors.color18
       },
       {
@@ -163,6 +181,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['totalBackendWrites'],
+        category: 'cache',
         color: colors.color19
       },
       {
@@ -171,6 +190,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'latency',
         type: 'AverageTime',
         fields: ['totalReadTime', 'totalReads'],
+        category: 'cache',
         color: colors.color20
       },
       {
@@ -179,6 +199,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'latency',
         type: 'AverageTime',
         fields: ['totalWriteTime', 'totalWrites'],
+        category: 'cache',
         color: colors.color21
       }
     ]
@@ -194,6 +215,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['totalGetBytes'],
+        category: 'objectstore',
         color: colors.color22
       },
       {
@@ -202,6 +224,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'throughput',
         type: 'DataSizePerSecond',
         fields: ['totalPutBytes'],
+        category: 'objectstore',
         color: colors.color23
       },
       {
@@ -210,6 +233,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['getObjectRequests'],
+        category: 'objectstore',
         color: colors.color24
       },
       {
@@ -218,6 +242,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'iops',
         type: 'RatePerSecond',
         fields: ['putObjectRequests'],
+        category: 'objectstore',
         color: colors.color25
       },
       {
@@ -226,6 +251,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'latency',
         type: 'AverageTime',
         fields: ['totalGetObjectTime', 'getObjectRequests'],
+        category: 'objectstore',
         color: colors.color26
       },
       {
@@ -234,6 +260,7 @@ export const SCHEMA: IPerformanceCategory[] = [
         group: 'latency',
         type: 'AverageTime',
         fields: ['totalPutObjectTime', 'putObjectRequests'],
+        category: 'objectstore',
         color: colors.color27
       }
     ]

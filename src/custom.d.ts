@@ -10,20 +10,26 @@ declare module 'react-scroll-component' {
 
 type TChildren = (() => JSX.Element | JSX.Element[]) | JSX.Element | JSX.Element[] | null;
 
-interface IPerformanceMetric {
+interface IMetric {
   label: string;
   shortLabel: string;
   group: string;
   type: string;
   fields: string[];
+  category: string;
   color: string;
 }
 
-interface IPerformanceCategory {
+interface IMetricCategory {
   name: string;
   label: string;
   path: string;
-  metrics: IPerformanceMetric[];
+  metrics: IMetric[];
+}
+
+interface IPerformanceMetric {
+  value: number;
+  label: string;
 }
 
 interface ISvgIcon {

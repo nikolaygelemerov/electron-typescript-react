@@ -1,13 +1,7 @@
 .Sidebar {
   width: 23rem;
-  padding: $offsetMedium;
+  padding: $offsetXXL $offsetMedium;
   background-color: $color_1_brand;
-}
-
-.Main {
-  display: flex;
-  flex: 1;
-  background-color: $color_10_brand;
 }
 
 .ModalContentClass {
