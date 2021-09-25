@@ -40,6 +40,9 @@ $color_8_brand: #495057;
 $color_9_brand: #497bb7;
 $color_10_brand: #ffffff;
 
+$color_11_error: #ff6e6e;
+$color_12_error: #c71414;
+
 // borders:
 $borderRadius: 0.4rem;
 
@@ -49,6 +52,8 @@ $boxShadow_1: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px
 
 $boxShadow_2: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
   rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+$boxShadow_3: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 // fonts-sizes:
 $fontXS: 1rem;
@@ -73,6 +78,11 @@ $transitionFast: 200ms;
 $transitionNormal: 300ms;
 $transitionSlow: 500ms;
 
+// root
+// modal
+$zIndex_1: 1;
+$zIndex_2: 2;
+
 :export {
   color1: $color1;
   color2: $color2;
@@ -90,16 +100,28 @@ $transitionSlow: 500ms;
   color14: $color14;
   color15: $color15;
   color16: $color16;
-  $color17: $color17;
-  $color18: $color18;
-  $color19: $color19;
-  $color20: $color20;
-  $color21: $color21;
-  $color22: $color22;
-  $color23: $color23;
-  $color24: $color24;
-  $color25: $color25;
-  $color26: $color26;
-  $color27: $color27;
+  color17: $color17;
+  color18: $color18;
+  color19: $color19;
+  color20: $color20;
+  color21: $color21;
+  color22: $color22;
+  color23: $color23;
+  color24: $color24;
+  color25: $color25;
+  color26: $color26;
+  color27: $color27;
+  color_1_brand: $color_1_brand;
+  color_2_brand: $color_2_brand;
+  color_3_brand: $color_3_brand;
+  color_4_brand: $color_4_brand;
+  color_5_brand: $color_5_brand;
+  color_6_brand: $color_6_brand;
+  color_7_brand: $color_7_brand;
+  color_8_brand: $color_8_brand;
+  color_9_brand: $color_9_brand;
+  color_10_brand: $color_10_brand;
+  color_11_error: $color_11_error;
+  color_12_error: $color_12_error;
   recourcePath: $recourcePath;
 }

@@ -10,13 +10,44 @@
   padding: 5rem 0;
   text-align: center;
   background-color: rgba($color_1_brand, 0.4);
+  animation: growBox 300ms;
   cursor: default;
 
-  .Content {
-    padding: $offsetLarge;
-    background-color: $color_10_brand;
-    border-radius: $borderRadius;
+  &.ContainerClose {
+    animation: shrinkBox 300ms;
+  }
+}
 
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+.Content {
+  position: relative;
+  padding: $offsetLarge;
+  background-color: $color_10_brand;
+  border-radius: $borderRadius;
+  box-shadow: $boxShadow_3;
+
+  .CloseIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+@keyframes growBox {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes shrinkBox {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(0);
   }
 }

@@ -1,6 +1,6 @@
 import { FC, memo, useCallback } from 'react';
 
-import { Autocomplete, useModal } from '@components';
+import { Autocomplete, Icons, useModal } from '@components';
 import { usePerformance } from '@providers';
 import { autocomplete, SCHEMA } from '@services';
 
@@ -13,8 +13,7 @@ const Main: FC = () => {
   } = usePerformance();
 
   const {
-    actions: { setModal, showModalById },
-    orderList
+    actions: { showModalById }
   } = useModal();
 
   const onMetricChange = useCallback(
@@ -24,22 +23,21 @@ const Main: FC = () => {
       } else {
         if (metrics.length === 3) {
           showModalById({
-            id: 'Some Modal',
-            closeContainerClass: styles.ModalContainerClose,
-            containerClass: styles.ModalContainer,
-            content: <p>Hesllo</p>,
-            onAnimationEnd: () => {
-              if (orderList.length === 0) {
-                setModal({});
-              }
-            }
+            id: 'Metrics_select_warning',
+            content: (
+              <p className={styles.ModalWarn}>
+                <Icons.Warn />
+                <span>Cannot select more than 3 metrics</span>
+              </p>
+            ),
+            contentClass: styles.ModalContentClass
           });
         } else {
           setMetric(value);
         }
       }
     },
-    [metrics, orderList.length, setMetric, setModal, showModalById, unsetMetric]
+    [metrics, setMetric, showModalById, unsetMetric]
   );
 
   return (

@@ -16,6 +16,7 @@
     "JSX": true,
     "IPerformanceCategory": true,
     "IPerformanceMetric": true,
+    "ISvgIcon": true,
     "TChildren": true
   },
   "parser": "@typescript-eslint/parser",

@@ -25,3 +25,10 @@ interface IPerformanceCategory {
   path: string;
   metrics: IPerformanceMetric[];
 }
+
+interface ISvgIcon {
+  className?: string;
+  fill?: string;
+  height?: string;
+  width?: string;
+}

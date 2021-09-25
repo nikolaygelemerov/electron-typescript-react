@@ -88,9 +88,11 @@ button {
   font-family: inherit;
   margin: 0;
   padding: 0;
+  background-color: transparent;
   border: none;
   outline: none;
   appearance: none;
+  cursor: pointer;
 }
 
 figure {

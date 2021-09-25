@@ -1,7 +1,9 @@
-import { AnimationEventHandler, FC, memo, useCallback, useMemo, useState } from 'react';
+import { FC, memo, useCallback, useMemo, useState } from 'react';
 
-import { useClass, useUpdate } from '@services';
+import { Icons } from '@components';
+import { useClass } from '@services';
 
+import { useModal } from '../../context';
 import { IModal } from '../../type-definitions';
 
 import styles from './Container.scss';
@@ -9,37 +11,44 @@ import styles from './Container.scss';
 const Container: FC<IModal> = (props) => {
   const {
     children,
-    closeContainerClass,
     containerClass,
     content,
     contentClass,
-    hideModal,
+    id,
     onClose,
-    onAnimationEnd,
     preventModalBackdropClick
   } = props;
 
-  const [containerClasses, setContainerClasses] = useState<string[]>([styles.Container]);
+  const {
+    actions: { hideModalById, setModal },
+    orderList
+  } = useModal();
+
+  const [isClosed, setIsClosed] = useState(false);
 
   const onCloseHandler = useCallback(() => {
-    hideModal && hideModal();
+    hideModalById({ id });
     onClose && onClose();
-
-    setContainerClasses((prevState) => [...prevState, closeContainerClass as string]);
-  }, [closeContainerClass, hideModal, onClose]);
+    setIsClosed(true);
+  }, [hideModalById, id, onClose]);
 
   const onBackdropCloseHandler = useCallback(
     (event) => {
       if (
         typeof event.target.className?.indexOf === 'function' &&
-        (event.target.className.indexOf(styles.Container) !== -1 ||
-          event.target.className.indexOf(styles.Content) !== -1)
+        event.target.className.indexOf(styles.Container) !== -1
       ) {
         onCloseHandler();
       }
     },
     [onCloseHandler]
   );
+
+  const onAnimationEndHandler = useCallback(() => {
+    if (orderList.length === 0) {
+      setModal({ id });
+    }
+  }, [id, orderList.length, setModal]);
 
   const renderChildrenContent = useMemo(() => {
     const output = children || content || null;
@@ -50,21 +59,23 @@ const Container: FC<IModal> = (props) => {
     return renderOutput;
   }, [children, content, props, onCloseHandler]);
 
-  useUpdate(() => {
-    setContainerClasses((prevState) => [...prevState, containerClass as string]);
-  }, [containerClass]);
-
-  console.log('containerClasses: ', containerClasses);
+  console.log('contentClass: ', contentClass);
 
   return (
     <div
-      className={useClass(containerClasses, [containerClasses])}
+      className={useClass(
+        [styles.Container, containerClass, isClosed && styles.ContainerClose],
+        [containerClass, isClosed]
+      )}
       onClick={(event) => {
         !preventModalBackdropClick && onBackdropCloseHandler(event);
       }}
-      onAnimationEnd={onAnimationEnd as AnimationEventHandler<HTMLDivElement>}
+      onAnimationEnd={onAnimationEndHandler}
     >
       <section className={useClass([styles.Content, contentClass], [contentClass])}>
+        <button className={styles.CloseIcon} onClick={onCloseHandler} type="button">
+          <Icons.Close />
+        </button>
         {renderChildrenContent}
       </section>
     </div>

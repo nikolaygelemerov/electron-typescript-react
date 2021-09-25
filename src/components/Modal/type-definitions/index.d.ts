@@ -1,17 +1,12 @@
-import { AnimationEventHandler } from 'react';
-
 export interface IModal {
   children?: TChildren;
   clearPreceeding?: boolean;
-  closeContainerClass?: string;
   containerClass?: string;
   content?: JSX.Element | Function;
   contentClass?: string;
   forceShow?: boolean;
-  hideModal?: Function;
   id: string;
   onClose?: Function;
-  onAnimationEnd?: AnimationEventHandler<HTMLDivElement>;
   overShow?: boolean;
   preventModalBackdropClick?: boolean;
 }

@@ -1,4 +1,4 @@
-import { FC, memo, useContext, useRef } from 'react';
+import { FC, memo, useContext } from 'react';
 import ReactDOM from 'react-dom';
 
 import { useUpdateOnly } from '@services';
@@ -10,30 +10,18 @@ const ModalArena: FC = () => {
   const {
     modalsToShow,
     orderList,
-    actions: { hideModalById, setModal }
+    actions: { setModal }
   } = useContext(ModalContext);
 
   const modalEl = document.querySelector('#modal') as HTMLElement;
-  const appEl = document.querySelector('#root') as HTMLElement;
-  const appStyle = useRef<CSSStyleDeclaration>(appEl?.style);
 
   useUpdateOnly(() => {
     if (orderList.length) {
       orderList.forEach(({ id }) => {
         setModal({ id });
       });
-    } else {
-      //  setModal({});
     }
-  }, [orderList, setModal]);
-
-  // useUpdateOnly(() => {
-  //   if (Object.keys(modalsToShow).length) {
-  //     appStyle.current.filter = 'blur(2px)';
-  //   } else {
-  //     appStyle.current.filter = 'none';
-  //   }
-  // }, [modalsToShow]);
+  }, [orderList]);
 
   return (
     <>
@@ -41,17 +29,7 @@ const ModalArena: FC = () => {
         const { id, ...otherProps } = modalsToShow[modalName];
 
         return modalEl
-          ? ReactDOM.createPortal(
-              <Container
-                key={modalName}
-                hideModal={() => {
-                  hideModalById({ id });
-                }}
-                id={id}
-                {...otherProps}
-              />,
-              modalEl
-            )
+          ? ReactDOM.createPortal(<Container key={modalName} id={id} {...otherProps} />, modalEl)
           : null;
       })}
     </>
