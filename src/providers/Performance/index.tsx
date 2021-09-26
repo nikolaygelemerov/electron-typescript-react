@@ -7,15 +7,18 @@ import { ActionType } from './action-types';
 import { TAction } from './actions';
 
 interface IInitialState {
+  performancePause: boolean;
   performanceMetrics: { [key: string]: IPerformanceMetric };
 }
 
 const initialState: IInitialState = {
+  performancePause: false,
   performanceMetrics: {}
 };
 
 const ACTION_TYPES = {
   setPerformanceMetrics: ActionType.SET_PERFORMANCE_METRICS,
+  setPerformancePause: ActionType.SET_PERFORMANCE_PAUSE,
   updatePerformanceMetric: ActionType.UPDATE_PERFORMANCE_METRIC
 };
 
@@ -25,6 +28,12 @@ const reducer = (state: IInitialState, action: TAction): IInitialState => {
       return {
         ...state,
         performanceMetrics: action.payload
+      };
+
+    case ActionType.SET_PERFORMANCE_PAUSE:
+      return {
+        ...state,
+        performancePause: action.payload
       };
 
     case ActionType.UPDATE_PERFORMANCE_METRIC:
@@ -41,6 +50,9 @@ const reducer = (state: IInitialState, action: TAction): IInitialState => {
 const initialContextState = {
   actions: {
     setPerformanceMetrics: (): void => {
+      throw new Error('No PerformanceProvider');
+    },
+    setPerformancePause: (): void => {
       throw new Error('No PerformanceProvider');
     },
     updatePerformanceMetric: (): void => {

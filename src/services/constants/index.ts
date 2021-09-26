@@ -274,3 +274,5 @@ export const SCHEMA: IMetricCategory[] = [
 ];
 
 export const DEFAULT_METRICS_COUNT = 3;
+
+export const CHART_TIME_SECONDS = 30;

@@ -4,7 +4,7 @@ import { Autocomplete, Icons, useModal } from '@components';
 import { useMetrics } from '@providers';
 import { autocomplete, SCHEMA } from '@services';
 
-import { PerformanceBoard } from './components';
+import { PerformanceBoard, PlayPause } from './components';
 
 import styles from './Main.scss';
 
@@ -79,6 +79,8 @@ const Main: FC = () => {
           value={metrics}
           valueExtractor={autocomplete.defaultValueExtractor}
         />
+        <br />
+        <PlayPause />
       </aside>
       <PerformanceBoard />
     </>

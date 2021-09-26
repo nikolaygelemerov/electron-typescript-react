@@ -28,6 +28,7 @@ interface IMetricCategory {
 }
 
 interface IPerformanceMetric {
+  color: string;
   value: number;
   label: string;
 }

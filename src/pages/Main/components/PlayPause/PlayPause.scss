@@ -1,0 +1,20 @@
+.PlayPause {
+  width: 100%;
+  height: 4.2rem;
+  padding: 0 $offsetSmall;
+  color: $color_1_brand;
+  font-size: $fontLarge;
+  text-align: center;
+  background-color: $color_3_brand;
+  border-radius: $borderRadius;
+  box-shadow: $boxShadow_2;
+  transition: all $transitionNormal ease-in-out;
+
+  &.Play {
+    background-color: $color_11_error;
+  }
+
+  &.Pause {
+    background-color: $color_7_brand;
+  }
+}

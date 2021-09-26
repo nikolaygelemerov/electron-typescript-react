@@ -53,6 +53,7 @@ export const PollManager = () => {
   useUpdate(() => {
     const performanceMetrics = metrics.reduce((accum, metric) => {
       accum[metric.label] = {
+        color: metric.color,
         label: metric.label,
         value: PerformanceModel.calculatePerfValue({
           fields: metric.fields,
@@ -72,6 +73,7 @@ export const PollManager = () => {
   useUpdate(() => {
     metrics.forEach((metric) => {
       updatePerformanceMetric({
+        color: metric.color,
         label: metric.label,
         value: PerformanceModel.calculatePerfValue({
           fields: metric.fields,
