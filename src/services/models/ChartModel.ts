@@ -21,17 +21,23 @@ export class ChartModel {
   }) => {
     if (!performancePause) {
       if (!(label in ChartModel.#cache)) {
-        ChartModel.#cache[label] = [{ xOffset: 0, y }];
+        ChartModel.#cache[label] = [{ xOffset: CHART_TIME_SECONDS, y }];
       } else if (ChartModel.#cache[label].length <= CHART_TIME_SECONDS) {
+        console.log('HEREE');
+        ChartModel.#cache[label] = ChartModel.#cache[label].map((el) => ({
+          ...el,
+          xOffset: el.xOffset - 1
+        }));
+
         ChartModel.#cache[label].push({
-          xOffset: ChartModel.#cache[label].length,
+          xOffset: CHART_TIME_SECONDS,
           y
         });
       } else {
         ChartModel.#cache[label] = [
           ...ChartModel.#cache[label],
           {
-            xOffset: ChartModel.#cache[label].length,
+            xOffset: CHART_TIME_SECONDS,
             y
           }
         ]
@@ -42,10 +48,16 @@ export class ChartModel {
 
     console.log('ChartModel.#cache: ', ChartModel.#cache);
 
-    return ChartModel.#cache[label].map((el) => ({
-      x: ChartModel.addSeconds(startTime, el.xOffset),
-      y: el.y
-    }));
+    return ChartModel.#cache[label]
+      .map((el) => ({
+        ...el,
+        xOffset: CHART_TIME_SECONDS - el.xOffset
+      }))
+      .map((el) => ({
+        x: ChartModel.addSeconds(startTime, el.xOffset),
+        y: el.y
+      }))
+      .reverse();
   };
 
   static deleteDataSet = ({ label }: { label: string }) => {

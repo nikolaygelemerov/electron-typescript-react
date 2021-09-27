@@ -34,7 +34,7 @@ const Lines: FC<{
               y: metric.value
             })}
             domain={{
-              x: [startTime, ChartModel.addSeconds(startTime, CHART_TIME_SECONDS)],
+              x: [ChartModel.addSeconds(startTime, CHART_TIME_SECONDS), startTime],
               y: [0, 20]
             }}
             interpolation="monotoneX"
