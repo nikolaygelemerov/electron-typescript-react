@@ -77,7 +77,7 @@ const Chart: FC = () => {
             const newX = ChartModel.formatTick(x);
 
             if (newX % 5 === 0) {
-              return newX;
+              return ChartModel.formatTick(x) as any;
             }
           }}
         />
