@@ -23,7 +23,6 @@ export class ChartModel {
       if (!(label in ChartModel.#cache)) {
         ChartModel.#cache[label] = [{ xOffset: CHART_TIME_SECONDS, y }];
       } else if (ChartModel.#cache[label].length <= CHART_TIME_SECONDS) {
-        console.log('HEREE');
         ChartModel.#cache[label] = ChartModel.#cache[label].map((el) => ({
           ...el,
           xOffset: el.xOffset - 1
@@ -46,13 +45,7 @@ export class ChartModel {
       }
     }
 
-    console.log('ChartModel.#cache: ', ChartModel.#cache);
-
     return ChartModel.#cache[label]
-      .map((el) => ({
-        ...el,
-        xOffset: CHART_TIME_SECONDS - el.xOffset
-      }))
       .map((el) => ({
         x: ChartModel.addSeconds(startTime, el.xOffset),
         y: el.y
@@ -60,10 +53,16 @@ export class ChartModel {
       .reverse();
   };
 
-  static deleteDataSet = ({ label }: { label: string }) => {
-    if (ChartModel.#cache[label]) {
-      delete ChartModel.#cache[label];
-    }
+  static deleteDataSetByMetrics = ({
+    performanceMetrics
+  }: {
+    performanceMetrics: { [key: string]: IPerformanceMetric };
+  }) => {
+    Object.keys(ChartModel.#cache).forEach((label) => {
+      if (!(label in performanceMetrics)) {
+        delete ChartModel.#cache[label];
+      }
+    });
   };
 
   static deleteDataSetAll = () => {
@@ -79,6 +78,8 @@ export class ChartModel {
 
     return list;
   };
+
+  static formatTick = (x: number) => CHART_TIME_SECONDS - x;
 
   static getStyles = () => {
     return {

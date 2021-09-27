@@ -2,7 +2,7 @@ import { FC, Fragment, memo, useMemo, useRef, useState } from 'react';
 import { VictoryAxis, VictoryLine, VictoryLabel } from 'victory';
 
 import { usePerformance } from '@providers';
-import { ChartModel, GlobalModel, CHART_TIME_SECONDS, useUpdateOnly } from '@services';
+import { ChartModel, GlobalModel, CHART_TIME_SECONDS, useUpdate, useUpdateOnly } from '@services';
 import colors from '@styles/shared/_variables.scss';
 
 const Lines: FC<{
@@ -19,6 +19,10 @@ const Lines: FC<{
     }
   }, [performancePause]);
 
+  useUpdate(() => {
+    ChartModel.deleteDataSetByMetrics({ performanceMetrics });
+  }, [performanceMetrics]);
+
   return (
     <Fragment key={key}>
       {Object.keys(performanceMetrics).map((label) => {
@@ -34,7 +38,7 @@ const Lines: FC<{
               y: metric.value
             })}
             domain={{
-              x: [ChartModel.addSeconds(startTime, CHART_TIME_SECONDS), startTime],
+              x: [startTime, ChartModel.addSeconds(startTime, CHART_TIME_SECONDS)],
               y: [0, 20]
             }}
             interpolation="monotoneX"
@@ -70,8 +74,10 @@ const Chart: FC = () => {
           style={styles.axisSeconds as any}
           tickValues={tickValues}
           tickFormat={(x) => {
-            if (x % 5 === 0) {
-              return x;
+            const newX = ChartModel.formatTick(x);
+
+            if (newX % 5 === 0) {
+              return newX;
             }
           }}
         />
