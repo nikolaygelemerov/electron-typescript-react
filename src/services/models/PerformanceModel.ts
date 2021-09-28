@@ -42,10 +42,10 @@ export class PerformanceModel {
           nsCalc < 1000
             ? `${nsCalc.toFixed(2)}ns` //nanoseconds
             : nsCalc < 1000000
-            ? `${(nsCalc / 1000).toFixed(2)}ms` //microseconds
+            ? `${(nsCalc / 1000).toFixed(2)}mu` //microseconds
             : nsCalc < 1000000000
-            ? `${(nsCalc / 1000000).toFixed(2)}msec` //milliseconds
-            : `${(nsCalc / 1000000000).toFixed(2)}sec`; //seconds
+            ? `${(nsCalc / 1000000).toFixed(2)}ms` //milliseconds
+            : `${(nsCalc / 1000000000).toFixed(2)}s`; //seconds
         break;
 
       case MetricType.DATA_SIZE_PER_SECOND:

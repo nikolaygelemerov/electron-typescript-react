@@ -13,8 +13,6 @@ const Metrics = () => {
     state: { performanceMetrics }
   } = usePerformance();
 
-  console.log('performanceMetrics: ', performanceMetrics);
-
   return (
     <div className={styles.Metrics}>
       {metrics.map((metric) => (
@@ -23,7 +21,7 @@ const Metrics = () => {
             <span className={styles.MetricColorBox} style={{ backgroundColor: metric.color }} />
             <span className={styles.MetricLabel}>{metric.label}</span>
             {Object.keys(performanceMetrics).length ? (
-              <span>{performanceMetrics[metric.label]?.value}</span>
+              <span className={styles.MetricValue}>{performanceMetrics[metric.label]?.value}</span>
             ) : null}
           </div>
           <div

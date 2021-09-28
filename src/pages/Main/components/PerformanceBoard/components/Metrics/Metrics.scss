@@ -26,7 +26,11 @@
       border-bottom: 0.1rem solid $color_8_brand;
 
       .MetricLabel {
-        max-width: 16rem;
+        width: 13rem;
+      }
+
+      .MetricValue {
+        flex: 1;
       }
 
       .MetricColorBox {

@@ -15,7 +15,6 @@
     "start:electron": "electron .",
     "start": "yarn start:react & yarn start:electron",
     "build": "webpack --mode production",
-    "start-server": "set NODE_ENV=development && nodemon --exec ts-node ./server/main.ts",
     "test": "NODE_ENV=test jest --coverage --silent",
     "test:watch": "NODE_ENV=test jest --watchAll"
   },
