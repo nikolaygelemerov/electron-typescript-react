@@ -8,12 +8,12 @@
     "webpack"
   ],
   "license": "ISC",
-  "author": "",
+  "author": "Nikolay <deanhalluk@gmail.com>",
   "main": "main.js",
   "scripts": {
     "start:react": "webpack --config webpack.config.js --mode development --watch",
-    "start:electron": "electron .",
-    "start": "yarn start:react & yarn start:electron",
+    "start": "electron .",
+    "dist:linux": "electron-builder --linux",
     "build": "webpack --mode production",
     "test": "NODE_ENV=test jest --coverage --silent",
     "test:watch": "NODE_ENV=test jest --watchAll"
@@ -27,6 +27,26 @@
     "watch": [
       "./server/*"
     ]
+  },
+  "build": {
+    "appId": "electron-typescript-react-webpack",
+    "linux": {
+      "target": [
+        "deb",
+        "snap",
+        "rpm"
+      ],
+      "category": "Utility",
+      "files": [
+        "dist/**/*",
+        "package.json",
+        "main.js"
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "11.5.0",
+    "electron-builder": "^22.11.7"
   },
   "dependencies": {
     "@babel/core": "7.15.5",
@@ -63,7 +83,6 @@
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "6.2.0",
     "css-minimizer-webpack-plugin": "^3.0.2",
-    "electron": "11.5.0",
     "electron-reload": "^2.0.0-alpha.1",
     "enzyme": "^3.11.0",
     "eslint": "7.32.0",
