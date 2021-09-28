@@ -2,7 +2,14 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 
 import { useMetrics, usePerformance } from '@providers';
-import { GlobalModel, PerformanceModel, useMount, useUpdate } from '@services';
+import {
+  GlobalModel,
+  METRIC_CHART_DOMAIN,
+  METRIC_CHART_TYPE_AXIS_COLORS,
+  PerformanceModel,
+  useMount,
+  useUpdate
+} from '@services';
 
 const POLL_INTERVAL = 1000;
 
@@ -14,6 +21,7 @@ export const PollManager = () => {
   });
 
   const {
+    actions: { setFilespace },
     state: { metrics }
   } = useMetrics();
 
@@ -40,10 +48,12 @@ export const PollManager = () => {
         fs: { prevData: prevState.fs.newData, newData: fsData },
         objectstore: { prevData: prevState.objectstore.newData, newData: objectstoreData }
       }));
+
+      setFilespace(statusData.fileSystem.name);
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [setFilespace]);
 
   useMount(() => {
     fetchData();
@@ -55,6 +65,9 @@ export const PollManager = () => {
       accum[metric.label] = {
         color: metric.color,
         label: metric.label,
+        metricChartDomain: (METRIC_CHART_DOMAIN as any)[metric.type],
+        metricChartTypeAxisColor: (METRIC_CHART_TYPE_AXIS_COLORS as any)[metric.type],
+        type: metric.type,
         value: PerformanceModel.calculatePerfValue({
           fields: metric.fields,
           prevData: state[metric.category].prevData,
@@ -74,7 +87,10 @@ export const PollManager = () => {
     metrics.forEach((metric) => {
       updatePerformanceMetric({
         color: metric.color,
+        metricChartDomain: (METRIC_CHART_DOMAIN as any)[metric.type],
+        metricChartTypeAxisColor: (METRIC_CHART_TYPE_AXIS_COLORS as any)[metric.type],
         label: metric.label,
+        type: metric.type,
         value: PerformanceModel.calculatePerfValue({
           fields: metric.fields,
           prevData: state[metric.category].prevData,

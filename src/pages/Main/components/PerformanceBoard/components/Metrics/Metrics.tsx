@@ -13,15 +13,23 @@ const Metrics = () => {
     state: { performanceMetrics }
   } = usePerformance();
 
+  console.log('performanceMetrics: ', performanceMetrics);
+
   return (
     <div className={styles.Metrics}>
       {metrics.map((metric) => (
         <div key={metric.label} className={styles.Metric}>
-          <span className={styles.MetricColorBox} style={{ backgroundColor: metric.color }} />
-          {metric.label}
-          {Object.keys(performanceMetrics).length ? (
-            <span>{performanceMetrics[metric.label]?.value.toFixed(2)}</span>
-          ) : null}
+          <div className={styles.MetricStats}>
+            <span className={styles.MetricColorBox} style={{ backgroundColor: metric.color }} />
+            <span className={styles.MetricLabel}>{metric.label}</span>
+            {Object.keys(performanceMetrics).length ? (
+              <span>{performanceMetrics[metric.label]?.value}</span>
+            ) : null}
+          </div>
+          <div
+            className={styles.MetricType}
+            style={{ backgroundColor: performanceMetrics[metric.label]?.metricChartTypeAxisColor }}
+          />
         </div>
       ))}
     </div>

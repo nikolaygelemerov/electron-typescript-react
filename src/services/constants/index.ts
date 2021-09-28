@@ -276,3 +276,21 @@ export const SCHEMA: IMetricCategory[] = [
 export const DEFAULT_METRICS_COUNT = 3;
 
 export const CHART_TIME_SECONDS = 30;
+
+export enum MetricType {
+  RATE_PER_SECOND = 'RatePerSecond',
+  AVERAGE_TIME = 'AverageTime',
+  DATA_SIZE_PER_SECOND = 'DataSizePerSecond'
+}
+
+export const METRIC_CHART_DOMAIN = {
+  [MetricType.RATE_PER_SECOND]: [0, 100],
+  [MetricType.AVERAGE_TIME]: [0, 1000],
+  [MetricType.DATA_SIZE_PER_SECOND]: [0, 1000]
+};
+
+export const METRIC_CHART_TYPE_AXIS_COLORS = {
+  [MetricType.RATE_PER_SECOND]: colors.color_2_brand,
+  [MetricType.AVERAGE_TIME]: colors.color_7_brand,
+  [MetricType.DATA_SIZE_PER_SECOND]: colors.color_9_brand
+};

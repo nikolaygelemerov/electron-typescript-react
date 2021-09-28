@@ -2,7 +2,7 @@ import { FC, memo, useCallback } from 'react';
 
 import { Autocomplete, Icons, useModal } from '@components';
 import { useMetrics } from '@providers';
-import { autocomplete, SCHEMA } from '@services';
+import { autocomplete, SCHEMA, ChartModel, useUpdateOnly } from '@services';
 
 import { PerformanceBoard, PlayPause } from './components';
 
@@ -11,7 +11,7 @@ import styles from './Main.scss';
 const Main: FC = () => {
   const {
     actions: { setCategory, setMetric, unsetMetric },
-    state: { category, metrics }
+    state: { category, filespace, metrics }
   } = useMetrics();
 
   const {
@@ -41,6 +41,19 @@ const Main: FC = () => {
     },
     [metrics, setMetric, showModalById, unsetMetric]
   );
+
+  useUpdateOnly(() => {
+    showModalById({
+      id: 'Change_filespace',
+      content: (
+        <p className={styles.ModalSuccess}>
+          <span>Your filespace is {filespace}</span>
+        </p>
+      )
+    });
+
+    ChartModel.deleteDataSetAll();
+  }, [filespace]);
 
   return (
     <>

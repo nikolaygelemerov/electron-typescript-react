@@ -1,8 +1,4 @@
-enum MetricType {
-  RATE_PER_SECOND = 'RatePerSecond',
-  AVERAGE_TIME = 'AverageTime',
-  DATA_SIZE_PER_SECOND = 'DataSizePerSecond'
-}
+import { MetricType } from '@services/constants';
 
 export class PerformanceModel {
   static calculatePerfValue = ({
@@ -18,7 +14,7 @@ export class PerformanceModel {
     pollInterval: number;
     type: string;
   }) => {
-    let result = 0;
+    let result: number | string = 0;
 
     if (prevData === null || newData === null) {
       return result;
@@ -28,6 +24,7 @@ export class PerformanceModel {
       case MetricType.RATE_PER_SECOND:
         const rateField = fields[0];
 
+        // consider poll interval 1(second)
         result = newData[rateField] - prevData[rateField];
         break;
 
@@ -38,19 +35,40 @@ export class PerformanceModel {
         const changedTime = newData[timeField] - prevData[timeField];
         const changedCount = newData[countField] - prevData[countField];
 
-        result = changedCount !== 0 ? changedTime / (changedCount * 1000) : 0;
+        // Time in nanoseconds
+        const nsCalc = changedCount !== 0 ? changedTime / changedCount : 0;
+
+        result =
+          nsCalc < 1000
+            ? `${nsCalc.toFixed(2)}ns` //nanoseconds
+            : nsCalc < 1000000
+            ? `${(nsCalc / 1000).toFixed(2)}ms` //microseconds
+            : nsCalc < 1000000000
+            ? `${(nsCalc / 1000000).toFixed(2)}msec` //milliseconds
+            : `${(nsCalc / 1000000000).toFixed(2)}sec`; //seconds
         break;
 
       case MetricType.DATA_SIZE_PER_SECOND:
         const dataSizeField = fields[0];
 
-        result = (newData[dataSizeField] - prevData[dataSizeField]) / 1000 / pollInterval; // MB/s
+        // consider poll interval 1(second)
+        const bytesCalc = newData[dataSizeField] - prevData[dataSizeField]; // Bytes
+
+        result =
+          bytesCalc < 1000
+            ? `${bytesCalc.toFixed(2)}B` // Bytes
+            : bytesCalc < 1000000
+            ? `${(bytesCalc / 1000).toFixed(2)}KiB` //KiB
+            : bytesCalc < 1000000000
+            ? `${(bytesCalc / 1000000).toFixed(2)}MiB` //MiB
+            : `${(bytesCalc / 1000000000).toFixed(2)}GiB`; //GiB
+
         break;
 
       default:
         result = 0;
     }
 
-    return parseFloat(result.toFixed(2));
+    return result;
   };
 }

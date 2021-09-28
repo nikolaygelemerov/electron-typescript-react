@@ -1,5 +1,6 @@
 import { memo } from 'react';
 
+import { Icons } from '@components';
 import { usePerformance } from '@providers';
 import { useClass } from '@services';
 
@@ -11,8 +12,6 @@ const PlayPause = () => {
     state: { performancePause }
   } = usePerformance();
 
-  console.log('performancePause: ', performancePause);
-
   return (
     <button
       className={useClass(
@@ -22,7 +21,17 @@ const PlayPause = () => {
       onClick={() => setPerformancePause(!performancePause)}
       type="button"
     >
-      {performancePause ? 'Play' : 'Pause'}
+      {performancePause ? (
+        <>
+          <Icons.Play />
+          <span>Play</span>
+        </>
+      ) : (
+        <>
+          <Icons.Pause />
+          <span>Pause</span>
+        </>
+      )}
     </button>
   );
 };

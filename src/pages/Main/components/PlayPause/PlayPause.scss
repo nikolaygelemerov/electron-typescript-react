@@ -1,4 +1,8 @@
 .PlayPause {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   width: 100%;
   height: 4.2rem;
   padding: 0 $offsetSmall;
@@ -11,10 +15,12 @@
   transition: all $transitionNormal ease-in-out;
 
   &.Play {
+    color: $color_12_error;
     background-color: $color_11_error;
   }
 
   &.Pause {
+    color: $color14_success;
     background-color: $color_7_brand;
   }
 }

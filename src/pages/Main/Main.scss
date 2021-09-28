@@ -4,14 +4,22 @@
   background-color: $color_1_brand;
 }
 
-.ModalContentClass {
-  background-color: $color_11_error;
-}
-
 .ModalWarn {
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding: $offsetLarge;
   color: $color_12_error;
   font-size: 2rem;
+  background-color: $color_11_error;
+}
+
+.ModalSuccess {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: $offsetLarge;
+  color: $color14_success;
+  font-size: 2rem;
+  background-color: $color_4_brand;
 }

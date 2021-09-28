@@ -29,8 +29,11 @@ interface IMetricCategory {
 
 interface IPerformanceMetric {
   color: string;
-  value: number;
   label: string;
+  metricChartDomain: [number, number];
+  metricChartTypeAxisColor: string;
+  type: string;
+  value: number | string;
 }
 
 interface ISvgIcon {

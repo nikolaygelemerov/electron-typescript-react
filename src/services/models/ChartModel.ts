@@ -1,4 +1,4 @@
-import { CHART_TIME_SECONDS } from '@services';
+import { CHART_TIME_SECONDS, METRIC_CHART_TYPE_AXIS_COLORS } from '@services/constants';
 import colors from '@styles/shared/_variables.scss';
 
 export class ChartModel {
@@ -45,12 +45,14 @@ export class ChartModel {
       }
     }
 
-    return ChartModel.#cache[label]
-      .map((el) => ({
-        x: ChartModel.addSeconds(startTime, el.xOffset),
-        y: el.y
-      }))
-      .reverse();
+    return ChartModel.#cache?.[label]
+      ? ChartModel.#cache[label]
+          .map((el) => ({
+            x: ChartModel.addSeconds(startTime, el.xOffset),
+            y: el.y
+          }))
+          .reverse()
+      : [];
   };
 
   static deleteDataSetByMetrics = ({
@@ -103,7 +105,7 @@ export class ChartModel {
       axisSeconds: {
         grid: {
           stroke: ({ tick }: { tick: number }) =>
-            tick % 5 === 0 ? colors.color_8_brand : 'transparent',
+            tick % 5 === 0 ? colors.color_13_grid : 'transparent',
           strokeWidth: 1
         },
         axis: { stroke: colors.color_8_brand, strokeWidth: 1 },
@@ -125,16 +127,65 @@ export class ChartModel {
       // DATA SET ONE
       axisOne: {
         grid: {
-          stroke: ({ tick }: { tick: number }) => colors.color_8_brand,
+          stroke: ({ tick }: { tick: number }) => colors.color_13_grid,
           strokeWidth: 1
         },
-        axis: { stroke: colors.color_8_brand, strokeWidth: 0 },
+        axis: { stroke: METRIC_CHART_TYPE_AXIS_COLORS.DataSizePerSecond, strokeWidth: 4 },
         ticks: { strokeWidth: 1 },
         tickLabels: {
-          fill: colors.color_8_brand,
+          fill: METRIC_CHART_TYPE_AXIS_COLORS.DataSizePerSecond,
           fontFamily: 'inherit',
           fontSize: 12
         }
+      },
+      labelOne: {
+        textAnchor: 'end',
+        fill: METRIC_CHART_TYPE_AXIS_COLORS.DataSizePerSecond,
+        fontFamily: 'inherit',
+        fontSize: 12,
+        fontStyle: 'italic'
+      },
+
+      axisTwo: {
+        grid: {
+          stroke: ({ tick }: { tick: number }) => colors.color_13_grid,
+          strokeWidth: 1
+        },
+        axis: { stroke: METRIC_CHART_TYPE_AXIS_COLORS.RatePerSecond, strokeWidth: 4 },
+        ticks: { strokeWidth: 1 },
+        tickLabels: {
+          fill: METRIC_CHART_TYPE_AXIS_COLORS.RatePerSecond,
+          fontFamily: 'inherit',
+          fontSize: 12
+        }
+      },
+      labelTwo: {
+        textAnchor: 'end',
+        fill: METRIC_CHART_TYPE_AXIS_COLORS.RatePerSecond,
+        fontFamily: 'inherit',
+        fontSize: 12,
+        fontStyle: 'italic'
+      },
+
+      axisThree: {
+        grid: {
+          stroke: ({ tick }: { tick: number }) => colors.color_13_grid,
+          strokeWidth: 1
+        },
+        axis: { stroke: METRIC_CHART_TYPE_AXIS_COLORS.AverageTime, strokeWidth: 4 },
+        ticks: { strokeWidth: 1 },
+        tickLabels: {
+          fill: METRIC_CHART_TYPE_AXIS_COLORS.AverageTime,
+          fontFamily: 'inherit',
+          fontSize: 12
+        }
+      },
+      labelThree: {
+        textAnchor: 'end',
+        fill: METRIC_CHART_TYPE_AXIS_COLORS.AverageTime,
+        fontFamily: 'inherit',
+        fontSize: 12,
+        fontStyle: 'italic'
       }
     };
   };
